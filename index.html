@@ -1,33 +1,215 @@
-function doPost(e) {
-  try {
-    // استقبال البيانات سواء كانت عبر JSON أو Form Data العادية
-    var data = {};
-    if (e.postData && e.postData.contents) {
-      try {
-        data = JSON.parse(e.postData.contents);
-      } catch(err) {
-        data = e.parameter || {};
-      }
-    } else if (e.parameter) {
-      data = e.parameter;
-    }
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بوابة التقارير اليومية | شركة أوراق المعرفة</title>
+    <style>
+        :root {
+            --primary-color: #8b1e19;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --border-color: #cbd5e1;
+            --success-color: #15803d;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif; }
+        body { background-color: var(--bg-color); color: var(--text-main); padding: 15px; direction: rtl; }
+        .container { max-width: 700px; margin: 0 auto; background: var(--card-bg); border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid var(--border-color); overflow: hidden; }
+        .header { background-color: var(--primary-color); color: white; padding: 20px; text-align: center; }
+        .header h1 { font-size: 20px; margin-bottom: 5px; }
+        .header p { font-size: 12px; opacity: 0.9; }
+        .form-section { padding: 20px; }
+        .section-title { font-size: 14px; font-weight: bold; color: var(--primary-color); border-bottom: 2px solid var(--primary-color); padding-bottom: 5px; margin: 20px 0 15px 0; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; font-size: 13px; font-weight: bold; margin-bottom: 5px; color: var(--text-main); }
+        select, input, textarea { width: 100%; padding: 10px; border: 1px solid var(--border-color); border-radius: 6px; font-size: 13px; background: #fff; }
+        .btn { width: 100%; padding: 12px; border: none; border-radius: 6px; font-size: 14px; font-weight: bold; cursor: pointer; margin-top: 5px; }
+        .btn-primary { background-color: var(--primary-color); color: white; }
+        .btn-success { background-color: var(--success-color); color: white; }
+        .btn-secondary { background-color: #334155; color: white; }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .status-box { padding: 10px; border-radius: 6px; font-size: 12px; margin-top: 10px; background: #f1f5f9; border: 1px solid var(--border-color); }
+        .loading-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: none; justify-content: center; align-items: center; z-index: 9999; color: white; font-size: 16px; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="loading-overlay" id="loadingOverlay">جاري معالجة الطلب، يرجى الانتظار...</div>
+    <div class="container">
+        <div class="header">
+            <h1>شركة أوراق المعرفة لتكنولوجيا المعلومات</h1>
+            <p>مشروع الجباية والتحصيل الإلكتروني — أمانة بغداد | بوابة التقارير اليومية</p>
+        </div>
+        <div class="form-section">
+            <form id="dailyReportForm" onsubmit="submitReportForm(event)">
+                <div class="section-title">أولاً: بيانات الحضور والتواجد الميداني</div>
+                <div class="form-group">
+                    <label>اسم مهندس الدعم الفني *</label>
+                    <select id="employeeName" required>
+                        <option value="">اختر اسم المهندس...</option>
+                        <option value="أحمد حكيم جاسم">أحمد حكيم جاسم</option>
+                        <option value="زيد أسامة">زيد أسامة</option>
+                        <option value="سجاد جمعة رحيم">سجاد جمعة رحيم</option>
+                        <option value="حيدر عبد الكريم">حيدر عبد الكريم</option>
+                        <option value="علي قاسم">علي قاسم</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>البلدية الميدانية *</label>
+                    <select id="municipality" required>
+                        <option value="">اختر البلدية...</option>
+                        <option value="بلدية الرصافة">1. بلدية الرصافة</option>
+                        <option value="بلدية الغدير">2. بلدية الغدير</option>
+                        <option value="بلدية الأعظمية">3. بلدية الأعظمية</option>
+                        <option value="بلدية الشعب">4. بلدية الشعب</option>
+                        <option value="بلدية الكرادة">5. بلدية الكرادة</option>
+                        <option value="بلدية الكاظمية">6. بلدية الكاظمية</option>
+                        <option value="بلدية الدورة">7. بلدية الدورة</option>
+                        <option value="بلدية الرشيد">8. بلدية الرشيد</option>
+                        <option value="بلدية المنصور">9. بلدية المنصور</option>
+                        <option value="بلدية بغداد الجديدة">10. بلدية بغداد الجديدة</option>
+                    </select>
+                </div>
+                <div class="form-group grid-2">
+                    <div><label>تاريخ العمل</label><input type="date" id="workDate" required></div>
+                    <div><label>حالة الدوام</label><input type="text" id="workStatusBadge" value="قيد تسجيل الحضور" readonly style="background:#f1f5f9; font-weight:bold; text-align:center;"></div>
+                </div>
+                <div class="grid-2" style="margin-top: 10px;">
+                    <button type="button" class="btn btn-success" onclick="doCheckIn()">📍 تسجيل الحضور الصباحي</button>
+                    <button type="button" class="btn btn-secondary" onclick="doCheckOut()">🏠 تسجيل الانصراف</button>
+                </div>
+                <div class="status-box" id="locationStatusText">لم يتم التحقق من الموقع الجغرافي بعد.</div>
 
-    var action = data.action || (e.parameter ? e.parameter.action : '');
-    var res = {status: 'success'};
+                <div class="section-title">ثانياً: مؤشرات الصيانة ومعالجة الأعطال</div>
+                <div class="grid-2">
+                    <div class="form-group"><label>المشاكل المحلولة والمنجزة *</label><input type="number" id="resolvedIssues" min="0" value="0" required></div>
+                    <div class="form-group"><label>المشاكل المعلقة *</label><input type="number" id="pendingIssues" min="0" value="0" required></div>
+                </div>
+                <div class="form-group"><label>تصنيف الأعطال المعالجة</label><input type="text" id="issueTypes" placeholder="مثال: طابعات، تابلت، شبكة..."></div>
 
-    if (action === 'checkIn' || data.checkInTime) {
-      res = recordMorningCheckIn(data);
-    } else if (action === 'checkOut' || data.checkOutTime) {
-      res = recordCheckOut(data);
-    } else {
-      res = submitReport(data);
-    }
+                <div class="section-title">ثالثاً: إدارة حركة واستبدال العهد الميدانية</div>
+                <div class="grid-2">
+                    <div class="form-group"><label>تابلت (مستلم/سحب)</label><input type="number" id="receivedTablets" min="0" value="0"></div>
+                    <div class="form-group"><label>تابلت (مسلّم/جديد)</label><input type="number" id="deliveredTablets" min="0" value="0"></div>
+                </div>
+                <div class="grid-2">
+                    <div class="form-group"><label>طابعات (مستلم/سحب)</label><input type="number" id="receivedPrinters" min="0" value="0"></div>
+                    <div class="form-group"><label>طابعات (مسلّم/جديد)</label><input type="number" id="deliveredPrinters" min="0" value="0"></div>
+                </div>
+                <div class="grid-2">
+                    <div class="form-group"><label>الفيستات المسلمة (يلك)</label><input type="number" id="vestsDelivered" min="0" value="0"></div>
+                    <div class="form-group"><label>القبعات المسلمة (كاب)</label><input type="number" id="capsDelivered" min="0" value="0"></div>
+                </div>
+                <div class="form-group"><label>تفاصيل السيريال والعهد المستبدلة</label><input type="text" id="assetsDetails" placeholder="أرقام السيريال أو الأجهزة"></div>
 
-    return ContentService.createTextOutput(JSON.stringify(res))
-      .setMimeType(ContentService.MimeType.JSON);
+                <div class="section-title">رابعاً: تفاصيل الإنجاز اليومي وملاحظات البلدية</div>
+                <div class="form-group"><label>تفاصيل الأعمال والصيانة المنفذة *</label><textarea id="dailyTasks" rows="3" required placeholder="اكتب ملخصاً للأعمال..."></textarea></div>
+                <div class="form-group"><label>أسباب التعليق أو التأخير</label><textarea id="pendingReason" rows="2" placeholder="لا يوجد"></textarea></div>
+                <div class="grid-2">
+                    <div class="form-group"><label>هل توجد مشكلة حرجة لباكر؟</label><select id="criticalIssue"><option value="لا">لا</option><option value="نعم">نعم</option></select></div>
+                    <div class="form-group"><label>متطلبات البلدية المرفوعة</label><input type="text" id="municipalityNeeds" placeholder="لا يوجد"></div>
+                </div>
+                <div class="form-group"><label>ملاحظات إضافية</label><input type="text" id="notes" placeholder="لا يوجد"></div>
+                <button type="submit" class="btn btn-primary" style="margin-top: 20px; padding: 15px; font-size: 15px;">📥 إرسال التقرير النهائي وتوثيق PDF</button>
+            </form>
+        </div>
+    </div>
 
-  } catch(err) {
-    return ContentService.createTextOutput(JSON.stringify({status: 'error', message: err.toString()}))
-      .setMimeType(ContentService.MimeType.JSON);
-  }
-}
+    <script>
+        // ضع هنا رابط الـ Web App الخاص بك من جوجل سكريبت
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz8WWzNg7anoSKyY75FPaqTWNs59My0XbjsIu14qS06G1v9YL5fIeFDjCYEGSp3BPrf/exec";
+
+        window.onload = function() {
+            document.getElementById('workDate').value = new Date().toISOString().split('T')[0];
+        };
+
+        function showLoading(show) {
+            document.getElementById('loadingOverlay').style.display = show ? 'flex' : 'none';
+        }
+
+        function sendToGoogle(action, payload, callback) {
+            showLoading(true);
+            fetch(SCRIPT_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ action: action, ...payload })
+            }).then(() => {
+                showLoading(false);
+                callback();
+            }).catch(err => {
+                showLoading(false);
+                alert('خطأ في الاتصال: ' + err);
+            });
+        }
+
+        function doCheckIn() {
+            var emp = document.getElementById('employeeName').value;
+            var mun = document.getElementById('municipality').value;
+            var date = document.getElementById('workDate').value;
+            if(!emp || !mun) { alert('يرجى اختيار اسم المهندس والبلدية أولاً!'); return; }
+
+            navigator.geolocation.getCurrentPosition(function(pos) {
+                var timeStr = new Date().toLocaleTimeString('en-GB', {hour: '2-digit', minute:'2-digit'});
+                sendToGoogle('checkIn', {
+                    employeeName: emp, municipality: mun, workDate: date,
+                    checkInTime: timeStr, locationUrl: "https://maps.google.com/?q=" + pos.coords.latitude + "," + pos.coords.longitude
+                }, function() {
+                    alert('✅ تم تسجيل الحضور الصباحي بنجاح في تبويب (Daily Report)!');
+                    document.getElementById('workStatusBadge').value = "حضور مثبت (" + timeStr + ")";
+                });
+            }, function() { alert('تعذر الحصول على موقع الـ GPS. تفعيل الموقع مطلوب.'); }, {enableHighAccuracy: true});
+        }
+
+        function doCheckOut() {
+            var emp = document.getElementById('employeeName').value;
+            var date = document.getElementById('workDate').value;
+            var mun = document.getElementById('municipality').value;
+            var timeStr = new Date().toLocaleTimeString('en-GB', {hour: '2-digit', minute:'2-digit'});
+            if(!emp) { alert('يرجى اختيار اسم المهندس أولاً!'); return; }
+
+            navigator.geolocation.getCurrentPosition(function(pos) {
+                sendToGoogle('checkOut', {
+                    employeeName: emp, workDate: date, municipality: mun,
+                    checkOutTime: timeStr, lat: pos.coords.latitude, lng: pos.coords.longitude
+                }, function() {
+                    alert('🏠 تم تسجيل الانصراف بنجاح!');
+                    document.getElementById('workStatusBadge').value = "تم الانصراف (" + timeStr + ")";
+                });
+            }, function() { alert('تعذر تحديد الموقع الجغرافي.'); }, {enableHighAccuracy: true});
+        }
+
+        function submitReportForm(e) {
+            e.preventDefault();
+            var emp = document.getElementById('employeeName').value;
+            if(!emp) { alert('يرجى اختيار اسم المهندس!'); return; }
+
+            var formData = {
+                employeeName: emp,
+                municipality: document.getElementById('municipality').value,
+                workDate: document.getElementById('workDate').value,
+                resolvedIssues: document.getElementById('resolvedIssues').value,
+                pendingIssues: document.getElementById('pendingIssues').value,
+                issueTypes: document.getElementById('issueTypes').value,
+                receivedTablets: document.getElementById('receivedTablets').value,
+                deliveredTablets: document.getElementById('deliveredTablets').value,
+                receivedPrinters: document.getElementById('receivedPrinters').value,
+                deliveredPrinters: document.getElementById('deliveredPrinters').value,
+                vestsDelivered: document.getElementById('vestsDelivered').value,
+                capsDelivered: document.getElementById('capsDelivered').value,
+                assetsDetails: document.getElementById('assetsDetails').value,
+                dailyTasks: document.getElementById('dailyTasks').value,
+                pendingReason: document.getElementById('pendingReason').value,
+                criticalIssue: document.getElementById('criticalIssue').value,
+                municipalityNeeds: document.getElementById('municipalityNeeds').value,
+                notes: document.getElementById('notes').value
+            };
+
+            sendToGoogle('submitReport', formData, function() {
+                alert('✅ تم إرسال وتوثيق التقرير النهائي بنجاح!');
+                document.getElementById('dailyReportForm').reset();
+            });
+        }
+    </script>
+</body>
+</html>
