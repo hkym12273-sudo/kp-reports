@@ -1,31 +1,465 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>بوابة التقارير الميدانية | شركة أوراق المعرفة</title>
-  <style>
-    * { box-sizing: border-box; }
-    html, body {
-      margin: 0;
-      padding: 0;
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      background-color: #f8fafc;
-    }
-    iframe {
-      border: none;
-      width: 100%;
-      height: 100%;
-      display: block;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بوابة التقارير اليومية الميدانية - مشروع عاصمتي | شركة أوراق المعرفة</title>
+    <style>
+        :root {
+            --primary-color: #8b1e19;
+            --primary-dark: #731713;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #cbd5e1;
+            --success-color: #15803d;
+            --danger-color: #b91c1c;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            padding: 15px;
+            direction: rtl;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+
+        .header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+
+        .header p {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+
+        .form-section {
+            padding: 20px;
+        }
+
+        .section-title {
+            font-size: 14px;
+            font-weight: bold;
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 5px;
+            margin: 20px 0 15px 0;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: var(--text-main);
+        }
+
+        select, input, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            background-color: #fff;
+        }
+
+        select:focus, input:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(139, 30, 25, 0.1);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-top: 5px;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .btn-success {
+            background-color: var(--success-color);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background-color: #166534;
+        }
+
+        .btn-secondary {
+            background-color: #334155;
+            color: white;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .status-box {
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            margin-top: 10px;
+            background: #f1f5f9;
+            border: 1px solid var(--border-color);
+        }
+
+        .loading-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
-  <iframe 
-    src="https://script.google.com/macros/s/AKfycbz8WWzNg7anoSKyY75FPaqTWNs59My0XbjsIu14qS06G1v9YL5fIeFDjCYEGSp3BPrf/exec"
-    allow="geolocation">
-  </iframe>
+
+    <div class="loading-overlay" id="loadingOverlay">جاري معالجة الطلب، يرجى الانتظار...</div>
+
+    <div class="container">
+        <div class="header">
+            <h1>شركة أوراق المعرفة لتكنولوجيا المعلومات</h1>
+            <p>مشروع الجباية والتحصيل الإلكتروني — أمانة بغداد | بوابة التقارير اليومية</p>
+        </div>
+
+        <div class="form-section">
+            <form id="dailyReportForm" onsubmit="handleFormSubmit(event)">
+                
+                <div class="section-title">أولاً: بيانات الحضور والتواجد الميداني</div>
+                
+                <div class="form-group">
+                    <label>اسم مهندس الدعم الفني *</label>
+                    <select id="employeeName" required onchange="checkStatus()">
+                        <option value="">اختر اسم المهندس...</option>
+                        <option value="أحمد حكيم جاسم">أحمد حكيم جاسم</option>
+                        <option value="زيد أسامة">زيد أسامة</option>
+                        <option value="سجاد جمعة رحيم">سجاد جمعة رحيم</option>
+                        <option value="حيدر عبد الكريم">حيدر عبد الكريم</option>
+                        <option value="علي قاسم">علي قاسم</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>البلدية الميدانية *</label>
+                    <select id="municipality" required>
+                        <option value="">اختر البلدية...</option>
+                        <option value="بلدية الرصافة">1. بلدية الرصافة</option>
+                        <option value="بلدية الغدير">2. بلدية الغدير</option>
+                        <option value="بلدية الأعظمية">3. بلدية الأعظمية</option>
+                        <option value="بلدية الشعب">4. بلدية الشعب</option>
+                        <option value="بلدية الكرادة">5. بلدية الكرادة</option>
+                        <option value="بلدية الكاظمية">6. بلدية الكاظمية</option>
+                        <option value="بلدية الدورة">7. بلدية الدورة</option>
+                        <option value="بلدية الرشيد">8. بلدية الرشيد</option>
+                        <option value="بلدية المنصور">9. بلدية المنصور</option>
+                        <option value="بلدية بغداد الجديدة">10. بلدية بغداد الجديدة</option>
+                    </select>
+                </div>
+
+                <div class="form-group grid-2">
+                    <div>
+                        <label>تاريخ العمل</label>
+                        <input type="date" id="workDate" required>
+                    </div>
+                    <div>
+                        <label>حالة الدوام</label>
+                        <input type="text" id="workStatusBadge" value="قيد تسجيل الحضور" readonly style="background:#f1f5f9; font-weight:bold; text-align:center;">
+                    </div>
+                </div>
+
+                <div class="grid-2" style="margin-top: 10px;">
+                    <button type="button" class="btn btn-success" onclick="doCheckIn()">📍 تسجيل الحضور الصباحي</button>
+                    <button type="button" class="btn btn-secondary" onclick="doCheckOut()">🏠 تسجيل الانصراف</button>
+                </div>
+
+                <div class="status-box" id="locationStatusText">لم يتم التحقق من الموقع الجغرافي بعد.</div>
+
+                <div class="section-title">ثانياً: مؤشرات الصيانة ومعالجة الأعطال</div>
+                <div class="grid-2">
+                    <div class="form-group">
+                        <label>المشاكل المحلولة والمنجزة *</label>
+                        <input type="number" id="resolvedIssues" min="0" value="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label>المشاكل المعلقة *</label>
+                        <input type="number" id="pendingIssues" min="0" value="0" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>تصنيف الأعطال المعالجة</label>
+                    <input type="text" id="issueTypes" placeholder="مثال: طابعات، تابلت، شبكة، جباية...">
+                </div>
+
+                <div class="section-title">ثالثاً: إدارة حركة واستبدال العهد الميدانية</div>
+                <div class="grid-2">
+                    <div class="form-group"><label>تابلت (مستلم/سحب)</label><input type="number" id="receivedTablets" min="0" value="0"></div>
+                    <div class="form-group"><label>تابلت (مسلّم/جديد)</label><input type="number" id="deliveredTablets" min="0" value="0"></div>
+                </div>
+                <div class="grid-2">
+                    <div class="form-group"><label>طابعات (مستلم/سحب)</label><input type="number" id="receivedPrinters" min="0" value="0"></div>
+                    <div class="form-group"><label>طابعات (مسلّم/جديد)</label><input type="number" id="deliveredPrinters" min="0" value="0"></div>
+                </div>
+                <div class="grid-2">
+                    <div class="form-group"><label>الفيستات المسلمة (يلك)</label><input type="number" id="vestsDelivered" min="0" value="0"></div>
+                    <div class="form-group"><label>القبعات المسلمة (كاب)</label><input type="number" id="capsDelivered" min="0" value="0"></div>
+                </div>
+                <div class="form-group">
+                    <label>تفاصيل السيريال والعهد المستبدلة</label>
+                    <input type="text" id="assetsDetails" placeholder="أرقام السيريال أو الأجهزة التالفة المستبدلة">
+                </div>
+
+                <div class="section-title">رابعاً: تفاصيل الإنجاز اليومي وملاحظات البلدية</div>
+                <div class="form-group">
+                    <label>تفاصيل الأعمال والصيانة المنفذة *</label>
+                    <textarea id="dailyTasks" rows="3" required placeholder="اكتب ملخصاً للأعمال التي أنجزتها اليوم..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>أسباب التعليق أو التأخير (إن وجدت)</label>
+                    <textarea id="pendingReason" rows="2" placeholder="لا يوجد"></textarea>
+                </div>
+                <div class="grid-2">
+                    <div class="form-group">
+                        <label>هل توجد مشكلة حرجة لباكر؟</label>
+                        <select id="criticalIssue">
+                            <option value="لا">لا</option>
+                            <option value="نعم">نعم</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>متطلبات البلدية المرفوعة</label>
+                        <input type="text" id="municipalityNeeds" placeholder="لا يوجد">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>ملاحظات إضافية</label>
+                    <input type="text" id="notes" placeholder="لا يوجد">
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="margin-top: 20px; padding: 15px; font-size: 15px;">📥 إرسال التقرير النهائي وتوثيق PDF</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // رابط السكربت الخاص بك في جوجل (تأكد أنه يطابق رابط النشر لديك إذا لزم الأمر، أو يعمل عبر الاستدعاء المباشر)
+        // ملاحظة: بما أن الصفحة مرفوعة على GitHub Pages، سيتم ربطها برابط الـ Web App لـ Apps Script
+        const SCRIPT_URL = "أضف_رابط_Web_App_الخاص_بك_هنا"; // رابط النشر من جوجل
+
+        window.onload = function() {
+            var today = new Date().toISOString().split('T')[0];
+            document.getElementById('workDate').value = today;
+        };
+
+        function showLoading(show) {
+            document.getElementById('loadingOverlay').style.display = show ? 'flex' : 'none';
+        }
+
+        function doCheckIn() {
+            var emp = document.getElementById('employeeName').value;
+            var mun = document.getElementById('municipality').value;
+            var date = document.getElementById('workDate').value;
+
+            if(!emp || !mun) {
+                alert('يرجى اختيار اسم المهندس والبلدية أولاً!');
+                return;
+            }
+
+            showLoading(true);
+            navigator.geolocation.getCurrentPosition(function(pos) {
+                var lat = pos.coords.latitude;
+                var lng = pos.coords.longitude;
+                var mapUrl = "https://maps.google.com/?q=" + lat + "," + lng;
+                var timeStr = new Date().toLocaleTimeString('en-GB', {hour: '2-digit', minute:'2-digit'});
+
+                // إرسال الطلب للسيرفر مباشرة
+                google.script.run
+                    .withSuccessHandler(function(res) {
+                        showLoading(false);
+                        if(res.status === 'success') {
+                            alert('✅ تم تسجيل الحضور الصباحي بنجاح في تبويب (Daily Report)!');
+                            document.getElementById('workStatusBadge').value = "حضور مثبت (" + timeStr + ")";
+                            document.getElementById('locationStatusText').innerHTML = "🟢 الحضور مثبت | وقت الدخول: " + timeStr;
+                        } else {
+                            alert('خطأ: ' + res.message);
+                        }
+                    })
+                    .withFailureHandler(function(err) {
+                        showLoading(false);
+                        alert('حدث خطأ بالاتصال بالسيرفر: ' + err.message);
+                    })
+                    .recordMorningCheckIn({
+                        employeeName: emp,
+                        municipality: mun,
+                        workDate: date,
+                        checkInTime: timeStr,
+                        locationUrl: mapUrl
+                    });
+            }, function(err) {
+                showLoading(false);
+                alert('تعذر الحصول على موقع الـ GPS. يرجى تفعيل الموقع في هاتفك.');
+            }, {enableHighAccuracy: true});
+        }
+
+        function doCheckOut() {
+            var emp = document.getElementById('employeeName').value;
+            var date = document.getElementById('workDate').value;
+            var mun = document.getElementById('municipality').value;
+
+            if(!emp) {
+                alert('يرجى اختيار اسم المهندس أولاً!');
+                return;
+            }
+
+            showLoading(true);
+            navigator.geolocation.getCurrentPosition(function(pos) {
+                var lat = pos.coords.latitude;
+                var lng = pos.coords.longitude;
+                var timeStr = new Date().toLocaleTimeString('en-GB', {hour: '2-digit', minute:'2-digit'});
+
+                google.script.run
+                    .withSuccessHandler(function(res) {
+                        showLoading(false);
+                        if(res.status === 'success') {
+                            alert('🏠 تم تسجيل الانصراف بنجاح!');
+                            document.getElementById('workStatusBadge').value = "تم الانصراف (" + timeStr + ")";
+                        } else {
+                            alert(res.message);
+                        }
+                    })
+                    .withFailureHandler(function(err) {
+                        showLoading(false);
+                        alert('خطأ بالاتصال: ' + err.message);
+                    })
+                    .recordCheckOut({
+                        employeeName: emp,
+                        workDate: date,
+                        municipality: mun,
+                        checkOutTime: timeStr,
+                        lat: lat,
+                        lng: lng
+                    });
+            }, function(err) {
+                showLoading(false);
+                alert('تعذر تحديد الموقع الجغرافي.');
+            }, {enableHighAccuracy: true});
+        }
+
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            var emp = document.getElementById('employeeName').value;
+            if(!emp) {
+                alert('يرجى اختيار اسم المهندس!');
+                return;
+            }
+
+            showLoading(true);
+            var formData = {
+                employeeName: emp,
+                municipality: document.getElementById('municipality').value,
+                workDate: document.getElementById('workDate').value,
+                resolvedIssues: document.getElementById('resolvedIssues').value,
+                pendingIssues: document.getElementById('pendingIssues').value,
+                issueTypes: document.getElementById('issueTypes').value,
+                receivedTablets: document.getElementById('receivedTablets').value,
+                deliveredTablets: document.getElementById('deliveredTablets').value,
+                replacedTablets: document.getElementById('replacedTablets').value || 0,
+                receivedPrinters: document.getElementById('receivedPrinters').value,
+                deliveredPrinters: document.getElementById('deliveredPrinters').value,
+                replacedPrinters: document.getElementById('replacedPrinters').value || 0,
+                vestsDelivered: document.getElementById('vestsDelivered').value,
+                capsDelivered: document.getElementById('capsDelivered').value,
+                assetsDetails: document.getElementById('assetsDetails').value,
+                dailyTasks: document.getElementById('dailyTasks').value,
+                pendingReason: document.getElementById('pendingReason').value,
+                criticalIssue: document.getElementById('criticalIssue').value,
+                municipalityNeeds: document.getElementById('municipalityNeeds').value,
+                notes: document.getElementById('notes').value
+            };
+
+            google.script.run
+                .withSuccessHandler(function(res) {
+                    showLoading(false);
+                    if(res.status === 'success') {
+                        alert('✅ تم إرسال وتوثيق التقرير النهائي بنجاح وإرسال نسخة PDF إلى بريدك!');
+                        document.getElementById('dailyReportForm').reset();
+                    } else {
+                        alert('خطأ أثناء الإرسال: ' + res.message);
+                    }
+                })
+                .withFailureHandler(function(err) {
+                    showLoading(false);
+                    alert('خطأ بالاتصال بالسيرفر: ' + err.message);
+                })
+                .submitReport(formData);
+        }
+
+        function checkStatus() {
+            var emp = document.getElementById('employeeName').value;
+            var date = document.getElementById('workDate').value;
+            if(!emp) return;
+
+            google.script.run
+                .withSuccessHandler(function(data) {
+                    if(data.found) {
+                        document.getElementById('municipality').value = data.municipality || '';
+                        if(data.startTime) {
+                            document.getElementById('workStatusBadge').value = "حضور مثبت (" + data.startTime + ")";
+                        }
+                    }
+                })
+                .checkExistingLocation(emp, date);
+        }
+    </script>
 </body>
 </html>
