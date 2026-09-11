@@ -2,47 +2,183 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بوابة التقارير اليومية | شركة أوراق المعرفة</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>بوابة التقارير اليومية الميدانية - شركة أوراق المعرفة</title>
     <style>
         :root {
             --primary-color: #8b1e19;
+            --primary-dark: #621411;
             --bg-color: #f8fafc;
             --card-bg: #ffffff;
             --text-main: #1e293b;
             --border-color: #cbd5e1;
             --success-color: #15803d;
         }
+
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif; }
-        body { background-color: var(--bg-color); color: var(--text-main); padding: 15px; direction: rtl; }
-        .container { max-width: 700px; margin: 0 auto; background: var(--card-bg); border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid var(--border-color); overflow: hidden; }
-        .header { background-color: var(--primary-color); color: white; padding: 20px; text-align: center; }
-        .header h1 { font-size: 20px; margin-bottom: 5px; }
-        .header p { font-size: 12px; opacity: 0.9; }
-        .form-section { padding: 20px; }
-        .section-title { font-size: 14px; font-weight: bold; color: var(--primary-color); border-bottom: 2px solid var(--primary-color); padding-bottom: 5px; margin: 20px 0 15px 0; }
-        .form-group { margin-bottom: 15px; }
-        label { display: block; font-size: 13px; font-weight: bold; margin-bottom: 5px; color: var(--text-main); }
-        select, input, textarea { width: 100%; padding: 10px; border: 1px solid var(--border-color); border-radius: 6px; font-size: 13px; background: #fff; }
-        .btn { width: 100%; padding: 12px; border: none; border-radius: 6px; font-size: 14px; font-weight: bold; cursor: pointer; margin-top: 5px; }
-        .btn-primary { background-color: var(--primary-color); color: white; }
-        .btn-success { background-color: var(--success-color); color: white; }
-        .btn-secondary { background-color: #334155; color: white; }
+        body { background-color: var(--bg-color); color: var(--text-main); padding: 10px; direction: rtl; font-size: 14px; }
+
+        .container {
+            max-width: 680px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+        }
+
+        .header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 18px 15px;
+            text-align: center;
+            border-bottom: 4px solid var(--primary-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .brand-logo {
+            width: 50px;
+            height: 50px;
+            background: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            flex-shrink: 0;
+        }
+
+        .brand-text h1 { font-size: 16px; margin-bottom: 2px; font-weight: bold; text-align: right; }
+        .brand-text h2 { font-size: 11px; letter-spacing: 0.5px; opacity: 0.95; margin-bottom: 2px; font-weight: 600; text-align: right; text-transform: uppercase; }
+        .brand-text p { font-size: 10px; opacity: 0.85; text-align: right; }
+
+        .form-section { padding: 18px; }
+
+        .section-title {
+            background-color: #fdf5f4;
+            border-right: 4px solid var(--primary-color);
+            color: var(--primary-color);
+            font-size: 13px;
+            font-weight: bold;
+            padding: 6px 10px;
+            margin: 18px 0 12px 0;
+            border-radius: 4px;
+        }
+
+        .form-group { margin-bottom: 12px; }
+        label { display: block; font-size: 12px; font-weight: bold; margin-bottom: 5px; color: #334155; }
+        
+        select, input, textarea {
+            width: 100%;
+            padding: 11px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13.5px;
+            background-color: #fff;
+            color: var(--text-main);
+        }
+        select:focus, input:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(139, 30, 25, 0.12);
+        }
+
         .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .status-box { padding: 10px; border-radius: 6px; font-size: 12px; margin-top: 10px; background: #f1f5f9; border: 1px solid var(--border-color); }
-        .loading-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: none; justify-content: center; align-items: center; z-index: 9999; color: white; font-size: 16px; font-weight: bold; }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+        }
+        .btn-checkin { background-color: var(--success-color); color: white; }
+        .btn-checkout { background-color: #1e293b; color: white; }
+        .btn-submit { background-color: var(--primary-color); color: white; font-size: 14.5px; padding: 14px; margin-top: 15px; }
+        .btn:active { transform: scale(0.98); }
+
+        .status-box {
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            margin-top: 8px;
+            background: #f1f5f9;
+            border: 1px solid var(--border-color);
+            font-weight: bold;
+            color: #475569;
+            text-align: center;
+        }
+
+        .loading-screen {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.75);
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            color: white;
+            font-size: 15px;
+            font-weight: bold;
+        }
+        .spinner { width: 40px; height: 40px; border: 4px solid rgba(255,255,255,0.3); border-radius: 50%; border-top-color: #ffffff; animation: spin 0.8s infinite; margin-bottom: 12px; }
+        @keyframes spin { to { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
-    <div class="loading-overlay" id="loadingOverlay">جاري معالجة الطلب، يرجى الانتظار...</div>
+
+    <div class="loading-screen" id="loadingOverlay">
+        <div class="spinner"></div>
+        <div>جاري معالجة وتوثيق البيانات للإكسل، يرجى الانتظار...</div>
+    </div>
+
+    <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
+
     <div class="container">
         <div class="header">
-            <h1>شركة أوراق المعرفة لتكنولوجيا المعلومات</h1>
-            <p>مشروع الجباية والتحصيل الإلكتروني — أمانة بغداد | بوابة التقارير اليومية</p>
+            <div class="brand-logo">
+                <svg viewBox="0 0 300 300" width="40" height="40" xmlns="http://www.w3.org/2000/svg">
+                    <g fill="#8b1e19">
+                        <path d="M150 15 C135 55 125 90 150 128 C175 90 165 55 150 15 Z" />
+                        <path d="M150 22 L150 120" stroke="#ffffff" stroke-width="3" fill="none" stroke-linecap="round" />
+                        <path d="M150 50 Q138 65 133 80" stroke="#ffffff" stroke-width="2" fill="none" />
+                        <path d="M150 50 Q162 65 167 80" stroke="#ffffff" stroke-width="2" fill="none" />
+                        <path d="M150 78 Q140 92 137 105" stroke="#ffffff" stroke-width="2" fill="none" />
+                        <path d="M150 78 Q160 92 163 105" stroke="#ffffff" stroke-width="2" fill="none" />
+                        <path d="M150 128 C115 95 105 50 128 30 C100 65 110 110 150 128 Z" />
+                        <path d="M150 128 C185 95 195 50 172 30 C200 65 190 110 150 128 Z" />
+                        <path d="M78 75 C80 120 115 140 150 130 C110 115 102 80 78 75 Z" />
+                        <path d="M222 75 C220 120 185 140 150 130 C190 115 198 80 222 75 Z" />
+                        <path d="M60 120 C55 160 105 178 150 145 C102 145 82 125 60 120 Z" />
+                        <path d="M240 120 C245 160 195 178 150 145 C198 145 218 125 240 120 Z" />
+                        <path d="M150 145 C95 160 70 205 118 215 C150 200 150 165 150 145 Z" />
+                        <path d="M150 145 C205 160 230 205 182 215 C150 200 150 165 150 145 Z" />
+                        <polygon points="150,262 135,285 165,285" />
+                    </g>
+                </svg>
+            </div>
+            <div class="brand-text">
+                <h1>شركة أوراق المعرفة لتكنولوجيا المعلومات</h1>
+                <h2>KNOWLEDGE PAPERS • IT TECHNICAL SUPPORT</h2>
+                <p>مشروع الجباية والتحصيل الإلكتروني — أمانة بغداد</p>
+            </div>
         </div>
+
         <div class="form-section">
-            <form id="dailyReportForm" onsubmit="submitReportForm(event)">
+            <form id="dailyReportForm" onsubmit="handleFormSubmit(event)">
+                
                 <div class="section-title">أولاً: بيانات الحضور والتواجد الميداني</div>
+                
                 <div class="form-group">
                     <label>اسم مهندس الدعم الفني *</label>
                     <select id="employeeName" required>
@@ -54,6 +190,7 @@
                         <option value="علي قاسم">علي قاسم</option>
                     </select>
                 </div>
+
                 <div class="form-group">
                     <label>البلدية الميدانية *</label>
                     <select id="municipality" required>
@@ -70,15 +207,24 @@
                         <option value="بلدية بغداد الجديدة">10. بلدية بغداد الجديدة</option>
                     </select>
                 </div>
-                <div class="form-group grid-2">
-                    <div><label>تاريخ العمل</label><input type="date" id="workDate" required></div>
-                    <div><label>حالة الدوام</label><input type="text" id="workStatusBadge" value="قيد تسجيل الحضور" readonly style="background:#f1f5f9; font-weight:bold; text-align:center;"></div>
+
+                <div class="grid-2">
+                    <div class="form-group">
+                        <label>تاريخ العمل</label>
+                        <input type="date" id="workDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label>حالة الدوام</label>
+                        <input type="text" id="workStatusBadge" value="قيد تسجيل الحضور" readonly style="background:#f1f5f9; text-align:center; font-weight:bold;">
+                    </div>
                 </div>
-                <div class="grid-2" style="margin-top: 10px;">
-                    <button type="button" class="btn btn-success" onclick="doCheckIn()">📍 تسجيل الحضور الصباحي</button>
-                    <button type="button" class="btn btn-secondary" onclick="doCheckOut()">🏠 تسجيل الانصراف</button>
+
+                <div class="grid-2" style="margin-top: 5px;">
+                    <button type="button" class="btn btn-checkin" onclick="doCheckIn()">📍 تسجيل الحضور الصباحي</button>
+                    <button type="button" class="btn btn-checkout" onclick="doCheckOut()">🏠 تسجيل الانصراف</button>
                 </div>
-                <div class="status-box" id="locationStatusText">لم يتم التحقق من الموقع الجغرافي بعد.</div>
+
+                <div class="status-box" id="locationStatusText">📌 يرجى الضغط على زر الحضور أو الانصراف للتحقق من الموقع (GPS).</div>
 
                 <div class="section-title">ثانياً: مؤشرات الصيانة ومعالجة الأعطال</div>
                 <div class="grid-2">
@@ -106,41 +252,48 @@
                 <div class="form-group"><label>تفاصيل الأعمال والصيانة المنفذة *</label><textarea id="dailyTasks" rows="3" required placeholder="اكتب ملخصاً للأعمال..."></textarea></div>
                 <div class="form-group"><label>أسباب التعليق أو التأخير</label><textarea id="pendingReason" rows="2" placeholder="لا يوجد"></textarea></div>
                 <div class="grid-2">
-                    <div class="form-group"><label>هل توجد مشكلة حرجة لباكر؟</label><select id="criticalIssue"><option value="لا">لا</option><option value="نعم">نعم</option></select></div>
-                    <div class="form-group"><label>متطلبات البلدية المرفوعة</label><input type="text" id="municipalityNeeds" placeholder="لا يوجد"></div>
+                    <div class="form-group"><label>مشكلة حرجة باكر؟</label><select id="criticalIssue"><option value="لا">لا</option><option value="نعم">نعم</option></select></div>
+                    <div class="form-group"><label>متطلبات البلدية</label><input type="text" id="municipalityNeeds" placeholder="لا يوجد"></div>
                 </div>
                 <div class="form-group"><label>ملاحظات إضافية</label><input type="text" id="notes" placeholder="لا يوجد"></div>
-                <button type="submit" class="btn btn-primary" style="margin-top: 20px; padding: 15px; font-size: 15px;">📥 إرسال التقرير النهائي وتوثيق PDF</button>
+                <button type="submit" class="btn btn-submit">📥 إرسال التقرير النهائي وتوثيق PDF</button>
             </form>
         </div>
     </div>
 
     <script>
-        // ضع هنا رابط الـ Web App الخاص بك من جوجل سكريبت
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz8WWzNg7anoSKyY75FPaqTWNs59My0XbjsIu14qS06G1v9YL5fIeFDjCYEGSp3BPrf/exec";
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz8MWzg7anosSkYy75FPaqTwNs59My0XbjsIU14qS506G1v9YL5FieFDJYCEGSp3BPrf/exec";
 
         window.onload = function() {
             document.getElementById('workDate').value = new Date().toISOString().split('T')[0];
         };
 
-        function showLoading(show) {
-            document.getElementById('loadingOverlay').style.display = show ? 'flex' : 'none';
-        }
+        function sendViaIframe(payload, successMsg) {
+            document.getElementById('loadingOverlay').style.display = 'flex';
+            
+            var form = document.createElement('form');
+            form.action = SCRIPT_URL;
+            form.method = 'POST';
+            form.target = 'hidden_iframe';
 
-        function sendToGoogle(action, payload, callback) {
-            showLoading(true);
-            fetch(SCRIPT_URL, {
-                method: 'POST',
-                mode: 'no-cors',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ action: action, ...payload })
-            }).then(() => {
-                showLoading(false);
-                callback();
-            }).catch(err => {
-                showLoading(false);
-                alert('خطأ في الاتصال: ' + err);
-            });
+            for (var key in payload) {
+                if (payload.hasOwnProperty(key)) {
+                    var input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = key;
+                    input.value = payload[key];
+                    form.appendChild(input);
+                }
+            }
+
+            document.body.appendChild(form);
+            form.submit();
+            document.body.removeChild(form);
+
+            setTimeout(function() {
+                document.getElementById('loadingOverlay').style.display = 'none';
+                alert(successMsg);
+            }, 1500);
         }
 
         function doCheckIn() {
@@ -149,42 +302,71 @@
             var date = document.getElementById('workDate').value;
             if(!emp || !mun) { alert('يرجى اختيار اسم المهندس والبلدية أولاً!'); return; }
 
+            document.getElementById('locationStatusText').innerHTML = "⏳ جاري تحديد موقع الـ GPS، يرجى الانتظار...";
+
             navigator.geolocation.getCurrentPosition(function(pos) {
+                var lat = pos.coords.latitude;
+                var lng = pos.coords.longitude;
+                var mapUrl = "https://maps.google.com/?q=" + lat + "," + lng;
                 var timeStr = new Date().toLocaleTimeString('en-GB', {hour: '2-digit', minute:'2-digit'});
-                sendToGoogle('checkIn', {
-                    employeeName: emp, municipality: mun, workDate: date,
-                    checkInTime: timeStr, locationUrl: "https://maps.google.com/?q=" + pos.coords.latitude + "," + pos.coords.longitude
-                }, function() {
-                    alert('✅ تم تسجيل الحضور الصباحي بنجاح في تبويب (Daily Report)!');
-                    document.getElementById('workStatusBadge').value = "حضور مثبت (" + timeStr + ")";
-                });
-            }, function() { alert('تعذر الحصول على موقع الـ GPS. تفعيل الموقع مطلوب.'); }, {enableHighAccuracy: true});
+
+                document.getElementById('locationStatusText').innerHTML = "🟢 تم التحقق من الموقع بنجاح | وقت الدخول: " + timeStr;
+
+                sendViaIframe({
+                    action: 'checkIn',
+                    employeeName: emp, 
+                    municipality: mun, 
+                    workDate: date,
+                    checkInTime: timeStr, 
+                    locationUrl: mapUrl
+                }, '✅ تم تسجيل الحضور الصباحي بنجاح في نفس السطر بالإكسل!');
+
+                document.getElementById('workStatusBadge').value = "حضور مثبت (" + timeStr + ")";
+            }, function(err) {
+                document.getElementById('locationStatusText').innerHTML = "❌ تعذر تحديد الموقع. يرجى تفعيل الـ GPS.";
+                alert('تعذر الحصول على موقع الـ GPS. تأكد من تفعيله في هاتفك.');
+            }, {enableHighAccuracy: true});
         }
 
         function doCheckOut() {
             var emp = document.getElementById('employeeName').value;
-            var date = document.getElementById('workDate').value;
             var mun = document.getElementById('municipality').value;
+            var date = document.getElementById('workDate').value;
             var timeStr = new Date().toLocaleTimeString('en-GB', {hour: '2-digit', minute:'2-digit'});
             if(!emp) { alert('يرجى اختيار اسم المهندس أولاً!'); return; }
 
+            document.getElementById('locationStatusText').innerHTML = "⏳ جاري تحديد موقع الانصراف (GPS)...";
+
             navigator.geolocation.getCurrentPosition(function(pos) {
-                sendToGoogle('checkOut', {
-                    employeeName: emp, workDate: date, municipality: mun,
-                    checkOutTime: timeStr, lat: pos.coords.latitude, lng: pos.coords.longitude
-                }, function() {
-                    alert('🏠 تم تسجيل الانصراف بنجاح!');
-                    document.getElementById('workStatusBadge').value = "تم الانصراف (" + timeStr + ")";
-                });
-            }, function() { alert('تعذر تحديد الموقع الجغرافي.'); }, {enableHighAccuracy: true});
+                var lat = pos.coords.latitude;
+                var lng = pos.coords.longitude;
+                var mapUrl = "https://maps.google.com/?q=" + lat + "," + lng;
+
+                document.getElementById('locationStatusText').innerHTML = "🏠 تم تسجيل الانصراف بنجاح | الوقت: " + timeStr;
+
+                sendViaIframe({
+                    action: 'checkOut',
+                    employeeName: emp, 
+                    workDate: date, 
+                    municipality: mun,
+                    checkOutTime: timeStr, 
+                    locationUrl: mapUrl
+                }, '🏠 تم تسجيل الانصراف في نفس سطر اليوم بنجاح!');
+
+                document.getElementById('workStatusBadge').value = "تم الانصراف (" + timeStr + ")";
+            }, function(err) {
+                document.getElementById('locationStatusText').innerHTML = "❌ تعذر تحديد موقع الانصراف.";
+                alert('تعذر تحديد الموقع الجغرافي.');
+            }, {enableHighAccuracy: true});
         }
 
-        function submitReportForm(e) {
+        function handleFormSubmit(e) {
             e.preventDefault();
             var emp = document.getElementById('employeeName').value;
             if(!emp) { alert('يرجى اختيار اسم المهندس!'); return; }
 
-            var formData = {
+            var data = {
+                action: 'submitReport',
                 employeeName: emp,
                 municipality: document.getElementById('municipality').value,
                 workDate: document.getElementById('workDate').value,
@@ -205,10 +387,8 @@
                 notes: document.getElementById('notes').value
             };
 
-            sendToGoogle('submitReport', formData, function() {
-                alert('✅ تم إرسال وتوثيق التقرير النهائي بنجاح!');
-                document.getElementById('dailyReportForm').reset();
-            });
+            sendViaIframe(data, '✅ تم إرسال وتوثيق التقرير النهائي بنجاح!');
+            document.getElementById('dailyReportForm').reset();
         }
     </script>
 </body>
