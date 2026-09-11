@@ -6,173 +6,122 @@
     <title>بوابة التقارير اليومية الميدانية - مشروع عاصمتي | شركة أوراق المعرفة</title>
     <style>
         :root {
-            --primary-color: #8b1e19;
-            --primary-dark: #731713;
-            --bg-color: #f8fafc;
-            --card-bg: #ffffff;
-            --text-main: #1e293b;
-            --text-muted: #64748b;
-            --border-color: #cbd5e1;
-            --success-color: #15803d;
-            --danger-color: #b91c1c;
+            --kp-primary: #8b1e19;
+            --kp-dark: #0f172a;
+            --kp-bg: #f8fafc;
+            --kp-border: #cbd5e1;
+            --kp-success: #15803d;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Cairo', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            padding: 15px;
-            direction: rtl;
-        }
-
-        .container {
-            max-width: 700px;
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif; }
+        body { background-color: var(--kp-bg); color: var(--kp-dark); padding: 12px; direction: rtl; }
+        
+        .main-card {
+            max-width: 650px;
             margin: 0 auto;
-            background: var(--card-bg);
+            background: #ffffff;
             border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid var(--kp-border);
             overflow: hidden;
-            border: 1px solid var(--border-color);
         }
 
-        .header {
-            background-color: var(--primary-color);
+        .brand-header {
+            background-color: var(--kp-primary);
             color: white;
             padding: 20px;
             text-align: center;
+            border-bottom: 4px solid #621411;
         }
+        .brand-header h2 { font-size: 19px; margin-bottom: 4px; font-weight: bold; }
+        .brand-header p { font-size: 11.5px; opacity: 0.9; }
 
-        .header h1 {
-            font-size: 20px;
-            margin-bottom: 5px;
-        }
-
-        .header p {
-            font-size: 12px;
-            opacity: 0.9;
-        }
-
-        .form-section {
-            padding: 20px;
-        }
+        .form-body { padding: 18px; }
 
         .section-title {
-            font-size: 14px;
-            font-weight: bold;
-            color: var(--primary-color);
-            border-bottom: 2px solid var(--primary-color);
-            padding-bottom: 5px;
-            margin: 20px 0 15px 0;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        label {
-            display: block;
+            background-color: #fdf5f4;
+            border-right: 4px solid var(--kp-primary);
+            color: var(--kp-primary);
             font-size: 13px;
             font-weight: bold;
-            margin-bottom: 5px;
-            color: var(--text-main);
+            padding: 6px 10px;
+            margin: 18px 0 12px 0;
+            border-radius: 4px;
         }
 
+        .form-group { margin-bottom: 12px; }
+        label { display: block; font-size: 12px; font-weight: bold; margin-bottom: 4px; color: #334155; }
+        
         select, input, textarea {
             width: 100%;
-            padding: 10px;
-            border: 1px solid var(--border-color);
+            padding: 9px 12px;
+            border: 1px solid var(--kp-border);
             border-radius: 6px;
-            font-size: 13px;
+            font-size: 12.5px;
             background-color: #fff;
+            color: var(--kp-dark);
         }
-
         select:focus, input:focus, textarea:focus {
             outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 2px rgba(139, 30, 25, 0.1);
+            border-color: var(--kp-primary);
+            box-shadow: 0 0 0 2px rgba(139, 30, 25, 0.12);
         }
+
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 
         .btn {
             width: 100%;
-            padding: 12px;
+            padding: 11px;
             border: none;
             border-radius: 6px;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: bold;
             cursor: pointer;
-            transition: background 0.2s;
-            margin-top: 5px;
+            transition: all 0.2s;
+            text-align: center;
         }
-
-        .btn-primary {
-            background-color: var(--primary-color);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background-color: var(--primary-dark);
-        }
-
-        .btn-success {
-            background-color: var(--success-color);
-            color: white;
-        }
-
-        .btn-success:hover {
-            background-color: #166534;
-        }
-
-        .btn-secondary {
-            background-color: #334155;
-            color: white;
-        }
-
-        .grid-2 {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-        }
+        .btn-checkin { background-color: var(--kp-success); color: white; }
+        .btn-checkout { background-color: #1e293b; color: white; }
+        .btn-submit { background-color: var(--kp-primary); color: white; font-size: 14px; padding: 13px; margin-top: 15px; }
+        .btn:active { transform: scale(0.98); }
 
         .status-box {
             padding: 10px;
             border-radius: 6px;
-            font-size: 12px;
-            margin-top: 10px;
+            font-size: 11.5px;
+            margin-top: 8px;
             background: #f1f5f9;
-            border: 1px solid var(--border-color);
+            border: 1px solid var(--kp-border);
+            font-weight: bold;
+            color: #475569;
         }
 
-        .loading-overlay {
+        .loading-screen {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.5);
+            background: rgba(15, 23, 42, 0.7);
             display: none;
             justify-content: center;
             align-items: center;
             z-index: 9999;
             color: white;
-            font-size: 16px;
+            font-size: 15px;
             font-weight: bold;
+            backdrop-filter: blur(2px);
         }
     </style>
 </head>
 <body>
 
-    <div class="loading-overlay" id="loadingOverlay">جاري معالجة الطلب، يرجى الانتظار...</div>
+    <div class="loading-screen" id="loadingOverlay">جاري معالجة وتوثيق البيانات، يرجى الانتظار...</div>
 
-    <div class="container">
-        <div class="header">
-            <h1>شركة أوراق المعرفة لتكنولوجيا المعلومات</h1>
-            <p>مشروع الجباية والتحصيل الإلكتروني — أمانة بغداد | بوابة التقارير اليومية</p>
+    <div class="main-card">
+        <div class="brand-header">
+            <h2>شركة أوراق المعرفة لتكنولوجيا المعلومات</h2>
+            <p>مشروع الجباية والتحصيل الإلكتروني — أمانة بغداد | بوابة التقارير الميدانية</p>
         </div>
 
-        <div class="form-section">
+        <div class="form-body">
             <form id="dailyReportForm" onsubmit="handleFormSubmit(event)">
                 
                 <div class="section-title">أولاً: بيانات الحضور والتواجد الميداني</div>
@@ -206,23 +155,23 @@
                     </select>
                 </div>
 
-                <div class="form-group grid-2">
-                    <div>
+                <div class="grid-2">
+                    <div class="form-group">
                         <label>تاريخ العمل</label>
                         <input type="date" id="workDate" required>
                     </div>
-                    <div>
+                    <div class="form-group">
                         <label>حالة الدوام</label>
-                        <input type="text" id="workStatusBadge" value="قيد تسجيل الحضور" readonly style="background:#f1f5f9; font-weight:bold; text-align:center;">
+                        <input type="text" id="workStatusBadge" value="قيد تسجيل الحضور" readonly style="background:#f1f5f9; text-align:center; font-weight:bold;">
                     </div>
                 </div>
 
-                <div class="grid-2" style="margin-top: 10px;">
-                    <button type="button" class="btn btn-success" onclick="doCheckIn()">📍 تسجيل الحضور الصباحي</button>
-                    <button type="button" class="btn btn-secondary" onclick="doCheckOut()">🏠 تسجيل الانصراف</button>
+                <div class="grid-2" style="margin-top: 5px;">
+                    <button type="button" class="btn btn-checkin" onclick="doCheckIn()">📍 تسجيل الحضور الصباحي</button>
+                    <button type="button" class="btn btn-checkout" onclick="doCheckOut()">🏠 تسجيل الانصراف</button>
                 </div>
 
-                <div class="status-box" id="locationStatusText">لم يتم التحقق من الموقع الجغرافي بعد.</div>
+                <div class="status-box" id="locationStatusText">📌 لم يتم التحقق من الموقع الجغرافي (GPS) بعد.</div>
 
                 <div class="section-title">ثانياً: مؤشرات الصيانة ومعالجة الأعطال</div>
                 <div class="grid-2">
@@ -270,7 +219,7 @@
                 </div>
                 <div class="grid-2">
                     <div class="form-group">
-                        <label>هل توجد مشكلة حرجة لباكر؟</label>
+                        <label>مشكلة حرجة باكر؟</label>
                         <select id="criticalIssue">
                             <option value="لا">لا</option>
                             <option value="نعم">نعم</option>
@@ -286,15 +235,13 @@
                     <input type="text" id="notes" placeholder="لا يوجد">
                 </div>
 
-                <button type="submit" class="btn btn-primary" style="margin-top: 20px; padding: 15px; font-size: 15px;">📥 إرسال التقرير النهائي وتوثيق PDF</button>
+                <button type="submit" class="btn btn-submit">📥 إرسال التقرير النهائي وتوثيق PDF</button>
             </form>
         </div>
     </div>
 
     <script>
-        // رابط السكربت الخاص بك في جوجل (تأكد أنه يطابق رابط النشر لديك إذا لزم الأمر، أو يعمل عبر الاستدعاء المباشر)
-        // ملاحظة: بما أن الصفحة مرفوعة على GitHub Pages، سيتم ربطها برابط الـ Web App لـ Apps Script
-       const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz8MWzg7anosSkYy75FPaqTwNs59My0XbjsIU14qS506G1v9YL5FieFDJYCEGSp3BPrf/exec";
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz8MWzg7anosSkYy75FPaqTwNs59My0XbjsIU14qS506G1v9YL5FieFDJYCEGSp3BPrf/exec";
 
         window.onload = function() {
             var today = new Date().toISOString().split('T')[0];
@@ -303,6 +250,22 @@
 
         function showLoading(show) {
             document.getElementById('loadingOverlay').style.display = show ? 'flex' : 'none';
+        }
+
+        function callApi(action, data, callback) {
+            showLoading(true);
+            fetch(SCRIPT_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ action: action, ...data })
+            }).then(() => {
+                showLoading(false);
+                callback({ status: 'success' });
+            }).catch(err => {
+                showLoading(false);
+                alert('خطأ بالاتصال: ' + err);
+            });
         }
 
         function doCheckIn() {
@@ -315,39 +278,25 @@
                 return;
             }
 
-            showLoading(true);
             navigator.geolocation.getCurrentPosition(function(pos) {
                 var lat = pos.coords.latitude;
                 var lng = pos.coords.longitude;
                 var mapUrl = "https://maps.google.com/?q=" + lat + "," + lng;
                 var timeStr = new Date().toLocaleTimeString('en-GB', {hour: '2-digit', minute:'2-digit'});
 
-                // إرسال الطلب للسيرفر مباشرة
-                google.script.run
-                    .withSuccessHandler(function(res) {
-                        showLoading(false);
-                        if(res.status === 'success') {
-                            alert('✅ تم تسجيل الحضور الصباحي بنجاح في تبويب (Daily Report)!');
-                            document.getElementById('workStatusBadge').value = "حضور مثبت (" + timeStr + ")";
-                            document.getElementById('locationStatusText').innerHTML = "🟢 الحضور مثبت | وقت الدخول: " + timeStr;
-                        } else {
-                            alert('خطأ: ' + res.message);
-                        }
-                    })
-                    .withFailureHandler(function(err) {
-                        showLoading(false);
-                        alert('حدث خطأ بالاتصال بالسيرفر: ' + err.message);
-                    })
-                    .recordMorningCheckIn({
-                        employeeName: emp,
-                        municipality: mun,
-                        workDate: date,
-                        checkInTime: timeStr,
-                        locationUrl: mapUrl
-                    });
+                callApi('checkIn', {
+                    employeeName: emp,
+                    municipality: mun,
+                    workDate: date,
+                    checkInTime: timeStr,
+                    locationUrl: mapUrl
+                }, function(res) {
+                    alert('✅ تم تسجيل الحضور الصباحي بنجاح في تبويب (Daily Report)!');
+                    document.getElementById('workStatusBadge').value = "حضور مثبت (" + timeStr + ")";
+                    document.getElementById('locationStatusText').innerHTML = "🟢 الحضور مثبت | وقت الدخول: " + timeStr;
+                });
             }, function(err) {
-                showLoading(false);
-                alert('تعذر الحصول على موقع الـ GPS. يرجى تفعيل الموقع في هاتفك.');
+                alert('تعذر الحصول على موقع الـ GPS. تفعيل الموقع مطلوب.');
             }, {enableHighAccuracy: true});
         }
 
@@ -355,42 +304,26 @@
             var emp = document.getElementById('employeeName').value;
             var date = document.getElementById('workDate').value;
             var mun = document.getElementById('municipality').value;
+            var timeStr = new Date().toLocaleTimeString('en-GB', {hour: '2-digit', minute:'2-digit'});
 
             if(!emp) {
                 alert('يرجى اختيار اسم المهندس أولاً!');
                 return;
             }
 
-            showLoading(true);
             navigator.geolocation.getCurrentPosition(function(pos) {
-                var lat = pos.coords.latitude;
-                var lng = pos.coords.longitude;
-                var timeStr = new Date().toLocaleTimeString('en-GB', {hour: '2-digit', minute:'2-digit'});
-
-                google.script.run
-                    .withSuccessHandler(function(res) {
-                        showLoading(false);
-                        if(res.status === 'success') {
-                            alert('🏠 تم تسجيل الانصراف بنجاح!');
-                            document.getElementById('workStatusBadge').value = "تم الانصراف (" + timeStr + ")";
-                        } else {
-                            alert(res.message);
-                        }
-                    })
-                    .withFailureHandler(function(err) {
-                        showLoading(false);
-                        alert('خطأ بالاتصال: ' + err.message);
-                    })
-                    .recordCheckOut({
-                        employeeName: emp,
-                        workDate: date,
-                        municipality: mun,
-                        checkOutTime: timeStr,
-                        lat: lat,
-                        lng: lng
-                    });
+                callApi('checkOut', {
+                    employeeName: emp,
+                    workDate: date,
+                    municipality: mun,
+                    checkOutTime: timeStr,
+                    lat: pos.coords.latitude,
+                    lng: pos.coords.longitude
+                }, function(res) {
+                    alert('🏠 تم تسجيل الانصراف بنجاح!');
+                    document.getElementById('workStatusBadge').value = "تم الانصراف (" + timeStr + ")";
+                });
             }, function(err) {
-                showLoading(false);
                 alert('تعذر تحديد الموقع الجغرافي.');
             }, {enableHighAccuracy: true});
         }
@@ -403,7 +336,6 @@
                 return;
             }
 
-            showLoading(true);
             var formData = {
                 employeeName: emp,
                 municipality: document.getElementById('municipality').value,
@@ -427,39 +359,13 @@
                 notes: document.getElementById('notes').value
             };
 
-            google.script.run
-                .withSuccessHandler(function(res) {
-                    showLoading(false);
-                    if(res.status === 'success') {
-                        alert('✅ تم إرسال وتوثيق التقرير النهائي بنجاح وإرسال نسخة PDF إلى بريدك!');
-                        document.getElementById('dailyReportForm').reset();
-                    } else {
-                        alert('خطأ أثناء الإرسال: ' + res.message);
-                    }
-                })
-                .withFailureHandler(function(err) {
-                    showLoading(false);
-                    alert('خطأ بالاتصال بالسيرفر: ' + err.message);
-                })
-                .submitReport(formData);
+            callApi('submitReport', formData, function(res) {
+                alert('✅ تم إرسال وتوثيق التقرير النهائي بنجاح وإرسال نسخة PDF إلى بريدك!');
+                document.getElementById('dailyReportForm').reset();
+            });
         }
 
-        function checkStatus() {
-            var emp = document.getElementById('employeeName').value;
-            var date = document.getElementById('workDate').value;
-            if(!emp) return;
-
-            google.script.run
-                .withSuccessHandler(function(data) {
-                    if(data.found) {
-                        document.getElementById('municipality').value = data.municipality || '';
-                        if(data.startTime) {
-                            document.getElementById('workStatusBadge').value = "حضور مثبت (" + data.startTime + ")";
-                        }
-                    }
-                })
-                .checkExistingLocation(emp, date);
-        }
+        function checkStatus() {}
     </script>
 </body>
 </html>
