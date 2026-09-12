@@ -16,28 +16,34 @@
             --border-color: #e2e8f0;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
-        body { background-color: var(--bg-color); color: var(--text-main); font-size: 14.5px; padding: 15px 10px; }
-        .container { max-width: 700px; margin: 0 auto; }
+        body { background-color: var(--bg-color); color: var(--text-main); font-size: 14px; padding: 10px; }
+        .container { max-width: 650px; margin: 0 auto; }
         .header {
             background: linear-gradient(135deg, var(--brand-primary), var(--brand-secondary));
-            border-radius: 12px; padding: 25px 20px; display: flex; align-items: center; justify-content: space-between;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); margin-bottom: 25px; border-bottom: 5px solid var(--brand-accent); color: white;
+            border-radius: 10px; padding: 16px 20px; display: flex; align-items: center; justify-content: space-between;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); margin-bottom: 15px; border-bottom: 4px solid var(--brand-accent); color: white;
         }
-        .brand-text h1 { font-size: 20px; font-weight: 800; margin-bottom: 5px; }
-        .brand-text h2 { color: #fde047; font-size: 12px; font-weight: 700; }
-        .card { background: var(--card-bg); border-radius: 12px; padding: 25px 20px; margin-bottom: 20px; border: 1px solid var(--border-color); box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
-        .section-title { font-size: 16px; font-weight: 800; color: var(--brand-primary); margin-bottom: 20px; border-bottom: 2px solid #f1f5f9; padding-bottom: 10px; }
-        .form-group { margin-bottom: 15px; }
-        label { display: block; font-size: 13.5px; font-weight: 700; margin-bottom: 8px; }
-        select, input, textarea { width: 100%; padding: 12px; border: 1.5px solid var(--border-color); border-radius: 8px; font-family: 'Cairo'; background-color: #f8fafc; }
-        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .btn { width: 100%; padding: 14px; border: none; border-radius: 8px; font-size: 15px; font-weight: 800; cursor: pointer; color: white; margin-bottom: 12px; }
+        .header-logo-box {
+            width: 45px; height: 45px; background: white; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2); padding: 5px;
+        }
+        .header-logo-box svg { width: 32px; height: 32px; }
+        .brand-text h1 { font-size: 17px; font-weight: 800; margin-bottom: 2px; }
+        .brand-text h2 { color: #fde047; font-size: 11px; font-weight: 700; }
+        .card { background: var(--card-bg); border-radius: 10px; padding: 18px 15px; margin-bottom: 15px; border: 1px solid var(--border-color); box-shadow: 0 2px 4px rgba(0,0,0,0.01); }
+        .section-title { font-size: 15px; font-weight: 800; color: var(--brand-primary); margin-bottom: 12px; border-bottom: 2px solid #f1f5f9; padding-bottom: 6px; }
+        .form-group { margin-bottom: 12px; }
+        label { display: block; font-size: 13px; font-weight: 700; margin-bottom: 5px; }
+        select, input, textarea { width: 100%; padding: 10px; border: 1.5px solid var(--border-color); border-radius: 6px; font-family: 'Cairo'; background-color: #f8fafc; font-size: 13.5px; }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .btn { width: 100%; padding: 12px; border: none; border-radius: 6px; font-size: 14px; font-weight: 800; cursor: pointer; color: white; margin-bottom: 8px; }
         .btn-checkin { background: linear-gradient(135deg, #10b981, #059669); }
         .btn-checkout { background: linear-gradient(135deg, #334155, #0f172a); }
-        .btn-submit { background: linear-gradient(135deg, var(--brand-primary), var(--brand-secondary)); margin-top: 10px; padding: 16px;}
-        .status-text { padding: 12px; border-radius: 8px; text-align: center; margin-top: 10px; border: 1.5px dashed var(--border-color); background: #ffffff; color: #64748b; font-weight: 700;}
+        .btn-submit { background: linear-gradient(135deg, var(--brand-primary), var(--brand-secondary)); margin-top: 5px; padding: 14px; font-size: 15px;}
+        .status-text { padding: 10px; border-radius: 6px; text-align: center; margin-top: 8px; border: 1.5px dashed var(--border-color); background: #ffffff; color: #64748b; font-weight: 700; font-size: 13px;}
         .loading-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.85); display: none; flex-direction: column; justify-content: center; align-items: center; z-index: 9999; color: white; font-weight: 800; }
-        .spinner { width: 45px; height: 45px; border: 4px solid rgba(255,255,255,0.2); border-radius: 50%; border-top-color: var(--brand-accent); animation: spin 0.8s infinite linear; margin-bottom: 15px; }
+        .spinner { width: 40px; height: 40px; border: 4px solid rgba(255,255,255,0.2); border-radius: 50%; border-top-color: var(--brand-accent); animation: spin 0.8s infinite linear; margin-bottom: 12px; }
         @keyframes spin { to { transform: rotate(360deg); } }
     </style>
 </head>
@@ -49,7 +55,13 @@
             <div class="brand-text">
                 <h1>شركة أوراق المعرفة</h1>
                 <h2>IT TECHNICAL SUPPORT</h2>
-                <p>مشروع أمانة بغداد - الجباية الإلكترونية</p>
+                <p style="font-size: 11px; opacity: 0.9;">مشروع أمانة بغداد - الجباية الإلكترونية</p>
+            </div>
+            <!-- شعار الشركة الرسمي في الواجهة -->
+            <div class="header-logo-box">
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <path fill="#d94838" d="M50 8 C40 32 35 55 50 82 C65 55 60 32 50 8 Z M50 92 L50 72 M36 52 Q26 42 16 32 Q38 43 48 62 M64 52 Q74 42 84 32 Q62 43 52 62"/>
+                </svg>
             </div>
         </div>
 
@@ -88,7 +100,7 @@
                     <div class="form-group"><label>حالة الدوام</label><input type="text" id="workStatusBadge" value="قيد التسجيل" readonly style="color:#0284c7; font-weight:800; text-align:center; background:#eff6ff;"></div>
                 </div>
                 <button type="button" class="btn btn-checkin" onclick="doCheckIn()">📡 تسجيل الحضور الصباحي (GPS)</button>
-                <button type="button" class="btn btn-checkout" onclick="doCheckOut()">🏠 تسجيل الانصراف الرسمـي (حد أقصى 300م)</button>
+                <button type="button" class="btn btn-checkout" onclick="doCheckOut()">🏠 تسجيل الانصراف الرسمي (حد أقصى 300م)</button>
                 <div class="status-text" id="locationStatusText">📌 يرجى الضغط أعلاه لتثبيت الموقع الجغرافي.</div>
             </div>
 
@@ -133,7 +145,6 @@
     </div>
 
     <script>
-        // رابط الـ Web App الخاص بك في جوجل
         const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz8WWzNg7anoSKyY75FPaqTWNs59My0XbjsIu14qS06G1v9YL5fIeFDjCYEGSp3BPrf/exec";
 
         window.onload = function() {
