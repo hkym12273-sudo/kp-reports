@@ -3,93 +3,148 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>بوابة التقارير اليومية - شركة أوراق المعرفة</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <title>بوابة التقارير - شركة أوراق المعرفة</title>
+    <!-- استدعاء خط تجوال العصري -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <!-- استدعاء مكتبة الأيقونات -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
         :root {
-            --brand-primary: #bd3124; 
-            --brand-secondary: #8c1c13;
-            --brand-accent: #e85d41;
-            --bg-color: #f1f5f9;
+            /* باليت الألوان الاحترافي (الكحلي والقرمزي مأخوذ من الشعار) */
+            --brand-primary: #a81c1c; 
+            --brand-secondary: #7a1111;
+            --brand-dark: #0f172a;
+            --bg-color: #f4f7f6;
             --card-bg: #ffffff;
             --text-main: #1e293b;
+            --text-muted: #64748b;
             --border-color: #e2e8f0;
+            --transition: all 0.3s ease;
         }
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
-        body { background-color: var(--bg-color); color: var(--text-main); font-size: 13.5px; padding: 10px; }
-        .container { max-width: 600px; margin: 0 auto; }
         
-        .header {
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Tajawal', sans-serif; }
+        body { background-color: var(--bg-color); color: var(--text-main); font-size: 15px; overflow-x: hidden; }
+        
+        /* Navbar - شريط التنقل */
+        .navbar {
+            background-color: white; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 100;
+        }
+        .nav-brand { display: flex; align-items: center; gap: 12px; }
+        .nav-brand img { height: 40px; object-fit: contain; }
+        .nav-brand h1 { font-size: 18px; font-weight: 800; color: var(--brand-primary); margin: 0; }
+        .nav-profile { color: var(--brand-primary); font-size: 20px; cursor: pointer; }
+
+        .container { max-width: 700px; margin: 20px auto; padding: 0 15px; }
+
+        /* Hero Section - القسم الترحيبي */
+        .hero {
             background: linear-gradient(135deg, var(--brand-primary), var(--brand-secondary));
-            border-radius: 8px; padding: 15px 20px; display: flex; align-items: center; justify-content: space-between;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); margin-bottom: 15px; border-bottom: 3px solid var(--brand-accent); color: white;
+            border-radius: 16px; padding: 30px 20px; text-align: center; color: white;
+            box-shadow: 0 10px 25px rgba(168, 28, 28, 0.2); margin-bottom: 30px; position: relative; overflow: hidden;
         }
-        .header-logo-box {
-            width: 48px; height: 48px; background: white; border-radius: 6px;
-            display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2); padding: 3px; overflow: hidden;
+        .hero::before { content: ''; position: absolute; top: -50px; right: -50px; width: 150px; height: 150px; background: rgba(255,255,255,0.1); border-radius: 50%; }
+        .hero h2 { font-size: 22px; font-weight: 800; margin-bottom: 5px; }
+        .hero p { font-size: 13px; opacity: 0.9; margin-bottom: 20px; }
+        
+        .hero-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .btn-checkin { background: #10b981; color: white; border: none; padding: 12px; border-radius: 8px; font-weight: 700; font-size: 14px; cursor: pointer; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3); transition: var(--transition); }
+        .btn-checkin:hover { background: #059669; transform: translateY(-2px); }
+        .btn-checkout { background: var(--brand-dark); color: white; border: none; padding: 12px; border-radius: 8px; font-weight: 700; font-size: 14px; cursor: pointer; box-shadow: 0 4px 15px rgba(15, 23, 42, 0.3); transition: var(--transition); }
+        .btn-checkout:hover { background: #000; transform: translateY(-2px); }
+
+        /* Cards - البطاقات بتأثير حركي */
+        .card { 
+            background: var(--card-bg); border-radius: 16px; padding: 25px 20px; margin-bottom: 20px; 
+            border: 1px solid rgba(0,0,0,0.03); box-shadow: 0 4px 15px rgba(0,0,0,0.03); transition: var(--transition); 
         }
-        .header-logo-box img { width: 100%; height: 100%; object-fit: contain; }
+        .card:hover { transform: translateY(-4px); box-shadow: 0 12px 25px rgba(0,0,0,0.06); }
         
-        .brand-text { text-align: right; width: 100%; }
-        .brand-text h1 { font-size: 18px; font-weight: 800; margin-bottom: 2px; }
-        .brand-text h2 { color: #fde047; font-size: 11px; font-weight: 700; letter-spacing: 0.5px; }
+        .section-title { font-size: 16px; font-weight: 800; color: var(--brand-dark); margin-bottom: 18px; display: flex; align-items: center; gap: 8px; }
+        .section-title i { color: var(--brand-primary); }
         
-        .card { background: var(--card-bg); border-radius: 8px; padding: 15px 12px; margin-bottom: 12px; border: 1px solid var(--border-color); box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
-        .section-title { font-size: 14px; font-weight: 800; color: var(--brand-primary); margin-bottom: 10px; border-bottom: 2px solid #f8e9e8; padding-bottom: 5px; }
-        .form-group { margin-bottom: 10px; }
-        label { display: block; font-size: 12.5px; font-weight: 700; margin-bottom: 4px; color: #334155; }
-        select, input, textarea { width: 100%; padding: 8px 10px; border: 1.5px solid var(--border-color); border-radius: 5px; font-family: 'Cairo'; background-color: #f8fafc; font-size: 13px; }
-        select:focus, input:focus, textarea:focus { outline: none; border-color: var(--brand-accent); background-color: #fff; }
+        /* Inputs - الحقول */
+        .form-group { margin-bottom: 15px; position: relative; }
+        label { display: block; font-size: 13px; font-weight: 700; margin-bottom: 6px; color: var(--text-main); }
+        select, input, textarea { 
+            width: 100%; padding: 12px 15px; border: 1.5px solid var(--border-color); border-radius: 8px; 
+            font-family: 'Tajawal'; font-size: 14px; color: var(--brand-dark); background-color: #f8fafc; transition: var(--transition);
+        }
+        select:focus, input:focus, textarea:focus { outline: none; border-color: var(--brand-primary); background-color: white; box-shadow: 0 0 0 4px rgba(168, 28, 28, 0.1); }
         
-        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
         
-        .btn { width: 100%; padding: 10px; border: none; border-radius: 5px; font-size: 13.5px; font-weight: 800; cursor: pointer; color: white; margin-bottom: 6px; }
-        .btn-checkin { background: linear-gradient(135deg, #10b981, #059669); }
-        .btn-checkout { background: linear-gradient(135deg, #475569, #1e293b); }
-        .btn-submit { background: linear-gradient(135deg, var(--brand-primary), var(--brand-secondary)); margin-top: 5px; padding: 12px; font-size: 14.5px;}
+        .btn-submit { 
+            width: 100%; background: linear-gradient(135deg, var(--brand-primary), var(--brand-secondary)); 
+            color: white; border: none; padding: 16px; border-radius: 12px; font-size: 16px; font-weight: 800; 
+            cursor: pointer; box-shadow: 0 8px 20px rgba(168, 28, 28, 0.25); transition: var(--transition); margin-top: 10px;
+        }
+        .btn-submit:hover { transform: translateY(-3px) scale(1.01); box-shadow: 0 12px 25px rgba(168, 28, 28, 0.35); }
+
+        .status-text { padding: 12px; border-radius: 8px; text-align: center; margin-top: 10px; border: 1.5px dashed var(--border-color); background: #ffffff; color: var(--text-muted); font-weight: 700; font-size: 13px;}
         
-        .status-text { padding: 8px; border-radius: 5px; text-align: center; margin-top: 6px; border: 1px dashed var(--border-color); background: #ffffff; color: #64748b; font-weight: 700; font-size: 12px;}
-        .loading-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.85); display: none; flex-direction: column; justify-content: center; align-items: center; z-index: 9999; color: white; font-weight: 800; }
-        .spinner { width: 35px; height: 35px; border: 3px solid rgba(255,255,255,0.2); border-radius: 50%; border-top-color: var(--brand-accent); animation: spin 0.8s infinite linear; margin-bottom: 10px; }
+        /* Footer */
+        .footer { text-align: center; padding: 20px; color: var(--text-muted); font-size: 13px; border-top: 1px solid var(--border-color); margin-top: 30px; }
+        
+        /* Loader */
+        .loading-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.9); display: none; flex-direction: column; justify-content: center; align-items: center; z-index: 9999; color: white; font-weight: 800; }
+        .spinner { width: 45px; height: 45px; border: 4px solid rgba(255,255,255,0.2); border-radius: 50%; border-top-color: var(--brand-primary); animation: spin 0.8s infinite linear; margin-bottom: 15px; }
         @keyframes spin { to { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
     <div class="loading-screen" id="loadingOverlay"><div class="spinner"></div><div id="loadingMsg">جاري المعالجة...</div></div>
 
-    <div class="container">
-        <!-- الهيدر الأنيق -->
-        <div class="header">
-            <div class="brand-text">
-                <h1>شركة أوراق المعرفة</h1>
-                <h2>IT TECHNICAL SUPPORT</h2>
-                <p style="font-size: 10px; opacity: 0.85; margin-top:2px;">مشروع أمانة بغداد - الجباية الإلكترونية</p>
-            </div>
-            <!-- دالة الإخفاء التلقائي: إذا ما لقى الصورة راح يخفي المربع الأبيض نهائياً -->
-            <div class="header-logo-box" id="logoContainer">
-                <img src="logo.jpg" alt="Logo" onerror="document.getElementById('logoContainer').style.display='none';">
-            </div>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-brand">
+            <!-- استدعاء اللوكو الخاص بك من مستودعك مباشرة -->
+            <img src="https://kym12273-sudo.github.io/logo.png" alt="Logo" onerror="this.src='https://via.placeholder.com/40x40/a81c1c/ffffff?text=KP'">
+            <h1>أوراق المعرفة</h1>
         </div>
+        <div class="nav-profile"><i class="fa-solid fa-user-circle"></i></div>
+    </nav>
+
+    <div class="container">
+        <!-- Hero Section -->
+        <header class="hero">
+            <h2>بوابة التقارير الميدانية</h2>
+            <p>مشروع الجباية والتحصيل الإلكتروني - أمانة بغداد</p>
+            <div class="hero-actions">
+                <button type="button" class="btn-checkin" onclick="doCheckIn()"><i class="fa-solid fa-location-dot"></i> تسجيل حضور</button>
+                <button type="button" class="btn-checkout" onclick="doCheckOut()"><i class="fa-solid fa-person-walking-arrow-right"></i> تسجيل انصراف</button>
+            </div>
+            <div class="status-text" id="locationStatusText" style="background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2); color: white; margin-top:15px; border-style: solid;">
+                📌 يرجى تفعيل الـ GPS قبل تسجيل التواجد.
+            </div>
+        </header>
 
         <form id="dailyReportForm" onsubmit="handleFormSubmit(event)">
+            
             <div class="card">
-                <div class="section-title">📍 الحضور والتواجد الميداني</div>
-                <div class="form-group">
-                    <label>اسم مهندس الدعم الفني *</label>
-                    <select id="employeeName" required onchange="saveEmp()">
-                        <option value="">اختر اسم المهندس...</option>
-                        <option value="أحمد حكيم جاسم">أحمد حكيم جاسم</option>
-                        <option value="زيد أسامة">زيد أسامة</option>
-                        <option value="سجاد جمعة رحيم">سجاد جمعة رحيم</option>
-                        <option value="حيدر عبد الكريم">حيدر عبد الكريم</option>
-                        <option value="علي قاسم">علي قاسم</option>
-                    </select>
+                <div class="section-title"><i class="fa-solid fa-id-badge"></i> البيانات الأساسية</div>
+                <div class="grid-2">
+                    <div class="form-group">
+                        <label>المهندس المسؤول *</label>
+                        <select id="employeeName" required onchange="saveEmp()">
+                            <option value="">اختر اسمك...</option>
+                            <option value="أحمد حكيم جاسم">أحمد حكيم جاسم</option>
+                            <option value="زيد أسامة">زيد أسامة</option>
+                            <option value="سجاد جمعة رحيم">سجاد جمعة رحيم</option>
+                            <option value="حيدر عبد الكريم">حيدر عبد الكريم</option>
+                            <option value="علي قاسم">علي قاسم</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>تاريخ العمل</label>
+                        <input type="date" id="workDate" required readonly style="background:#e2e8f0; pointer-events: none;">
+                    </div>
                 </div>
                 <div class="form-group">
                     <label>البلدية الميدانية *</label>
                     <select id="municipality" required>
-                        <option value="">اختر البلدية التابع لها...</option>
+                        <option value="">اختر موقع العمل...</option>
                         <option value="بلدية الاعظمية">بلدية الاعظمية</option>
                         <option value="بلدية الغدير">بلدية الغدير</option>
                         <option value="بلدية الشعب">بلدية الشعب</option>
@@ -109,53 +164,46 @@
                         <option value="بلدية الثعالبه">بلدية الثعالبه</option>
                     </select>
                 </div>
-                <div class="grid-2">
-                    <div class="form-group"><label>تاريخ العمل</label><input type="date" id="workDate" required readonly style="background:#e2e8f0; border-color:#cbd5e1;"></div>
-                    <div class="form-group"><label>حالة الدوام</label><input type="text" id="workStatusBadge" value="قيد التسجيل" readonly style="color:#0369a1; font-weight:800; text-align:center; background:#e0f2fe; border-color:#bae6fd;"></div>
-                </div>
-                <button type="button" class="btn btn-checkin" onclick="doCheckIn()">📡 تسجيل الحضور الصباحي (GPS)</button>
-                <button type="button" class="btn btn-checkout" onclick="doCheckOut()">🏠 تسجيل الانصراف الرسمي (حد أقصى 300م)</button>
-                <div class="status-text" id="locationStatusText">📌 يرجى الضغط أعلاه لتثبيت الموقع الجغرافي.</div>
             </div>
 
             <div class="card">
-                <div class="section-title">⚙️ إحصائيات الصيانة والأعطال</div>
+                <div class="section-title"><i class="fa-solid fa-wrench"></i> إحصائيات الصيانة</div>
                 <div class="grid-2">
-                    <div class="form-group"><label>المشاكل المحلولة *</label><input type="number" id="resolvedIssues" min="0" value="0" required></div>
-                    <div class="form-group"><label>المشاكل المعلقة *</label><input type="number" id="pendingIssues" min="0" value="0" required></div>
+                    <div class="form-group"><label>مشاكل محلولة *</label><input type="number" id="resolvedIssues" min="0" value="0" required></div>
+                    <div class="form-group"><label>مشاكل معلقة *</label><input type="number" id="pendingIssues" min="0" value="0" required></div>
                 </div>
-                <div class="form-group"><label>تصنيف الأعطال المعالجة</label><input type="text" id="issueTypes" placeholder="مثال: طابعات، تابلت، كابلات شبكة..."></div>
+                <div class="form-group"><label>تصنيف الأعطال</label><input type="text" id="issueTypes" placeholder="مثال: شبكة، سوفتوير، هاردوير..."></div>
             </div>
 
             <div class="card">
-                <div class="section-title">📦 إدارة حركة العهد الميدانية</div>
+                <div class="section-title"><i class="fa-solid fa-boxes-stacked"></i> حركة الأجهزة والعهد</div>
                 <div class="grid-2">
+                    <div class="form-group"><label>تابلت (مسلّم)</label><input type="number" id="deliveredTablets" min="0" value="0"></div>
                     <div class="form-group"><label>تابلت (مستلم/سحب)</label><input type="number" id="receivedTablets" min="0" value="0"></div>
-                    <div class="form-group"><label>تابلت (مسلّم/جديد)</label><input type="number" id="deliveredTablets" min="0" value="0"></div>
+                    <div class="form-group"><label>طابعات (مسلّم)</label><input type="number" id="deliveredPrinters" min="0" value="0"></div>
+                    <div class="form-group"><label>طابعات (مستلم)</label><input type="number" id="receivedPrinters" min="0" value="0"></div>
+                    <div class="form-group"><label>الفيستات (يلك)</label><input type="number" id="vestsDelivered" min="0" value="0"></div>
+                    <div class="form-group"><label>القبعات (كاب)</label><input type="number" id="capsDelivered" min="0" value="0"></div>
                 </div>
-                <div class="grid-2">
-                    <div class="form-group"><label>طابعات (مستلم/سحب)</label><input type="number" id="receivedPrinters" min="0" value="0"></div>
-                    <div class="form-group"><label>طابعات (مسلّم/جديد)</label><input type="number" id="deliveredPrinters" min="0" value="0"></div>
-                </div>
-                <div class="grid-2">
-                    <div class="form-group"><label>الفيستات المسلمة (يلك)</label><input type="number" id="vestsDelivered" min="0" value="0"></div>
-                    <div class="form-group"><label>القبعات المسلمة (كاب)</label><input type="number" id="capsDelivered" min="0" value="0"></div>
-                </div>
-                <div class="form-group"><label>تفاصيل السيريال/الأجهزة</label><input type="text" id="assetsDetails" placeholder="أدخل أرقام السيريال للأجهزة المستبدلة..."></div>
+                <div class="form-group"><label>تفاصيل السيريال نمبر</label><input type="text" id="assetsDetails" placeholder="أدخل أرقام السيريال للأجهزة..."></div>
             </div>
 
             <div class="card">
-                <div class="section-title">📝 تفاصيل الإنجاز والملاحظات</div>
-                <div class="form-group"><label>الأعمال والصيانة المنفذة *</label><textarea id="dailyTasks" rows="2" required placeholder="وصف دقيق للأعمال المنجزة اليوم..."></textarea></div>
+                <div class="section-title"><i class="fa-solid fa-clipboard-check"></i> تفاصيل الإنجاز والملاحظات</div>
+                <div class="form-group"><label>الأعمال المنجزة بالتفصيل *</label><textarea id="dailyTasks" rows="3" required placeholder="وصف الأعمال..."></textarea></div>
                 <div class="form-group"><label>أسباب التعليق (إن وجدت)</label><textarea id="pendingReason" rows="1"></textarea></div>
                 <div class="grid-2">
-                    <div class="form-group"><label>مشكلة حرجة لغد؟</label><select id="criticalIssue"><option value="لا">لا</option><option value="نعم">نعم</option></select></div>
+                    <div class="form-group"><label>مشكلة حرجة غداً؟</label><select id="criticalIssue"><option value="لا">لا</option><option value="نعم">نعم</option></select></div>
                     <div class="form-group"><label>متطلبات البلدية</label><input type="text" id="municipalityNeeds"></div>
                 </div>
                 <div class="form-group"><label>ملاحظات إضافية</label><input type="text" id="notes"></div>
-                <button type="submit" class="btn btn-submit">🚀 إرسال التقرير النهائي واعتماد اليوم</button>
+                <button type="submit" class="btn-submit">🚀 اعتماد وإرسال التقرير النهائي</button>
             </div>
         </form>
+        
+        <footer class="footer">
+            &copy; 2026 شركة أوراق المعرفة لتكنولوجيا المعلومات. جميع الحقوق محفوظة.
+        </footer>
     </div>
 
     <script>
@@ -180,7 +228,7 @@
         }
 
         function sendToGoogle(payload, successMsg) {
-            document.getElementById('loadingMsg').innerText = "جاري معالجة وتوثيق البيانات...";
+            document.getElementById('loadingMsg').innerText = "جاري الاتصال بالسيرفر...";
             document.getElementById('loadingOverlay').style.display = 'flex';
             
             var formBody = [];
@@ -197,17 +245,15 @@
             .then(data => {
                 document.getElementById('loadingOverlay').style.display = 'none';
                 if (data.status === 'success') {
-                    setStatus(successMsg, '#059669', '#ecfdf5', '#34d399');
-                    if (payload.action === 'checkIn') document.getElementById('workStatusBadge').value = data.message;
-                    if (payload.action === 'checkOut') document.getElementById('workStatusBadge').value = data.message;
+                    setStatus(successMsg, '#fff', 'rgba(16, 185, 129, 0.2)', 'rgba(16, 185, 129, 0.4)');
                 } else {
-                    setStatus("❌ " + data.message, "#dc2626", "#fef2f2", "#f87171");
+                    setStatus("❌ " + data.message, "#fff", "rgba(239, 68, 68, 0.2)", "rgba(239, 68, 68, 0.4)");
                     alert("تنبيه: " + data.message);
                 }
             })
             .catch(error => {
                 document.getElementById('loadingOverlay').style.display = 'none';
-                setStatus("❌ خطأ في الاتصال بالسيرفر.", "#dc2626", "#fef2f2", "#f87171");
+                setStatus("❌ خطأ في الاتصال بالسيرفر.", "#fff", "rgba(239, 68, 68, 0.2)", "rgba(239, 68, 68, 0.4)");
             });
         }
 
@@ -215,9 +261,9 @@
             var emp = document.getElementById('employeeName').value;
             var mun = document.getElementById('municipality').value;
             var date = document.getElementById('workDate').value;
-            if(!emp || !mun) { setStatus("❌ يرجى اختيار اسم المهندس والبلدية أولاً!", "#dc2626", "#fef2f2", "#f87171"); return; }
+            if(!emp || !mun) { alert("يرجى اختيار اسم المهندس والبلدية أولاً!"); return; }
 
-            document.getElementById('loadingMsg').innerText = "جاري تحديد موقع GPS للحضور...";
+            document.getElementById('loadingMsg').innerText = "جاري تحديد موقع GPS...";
             document.getElementById('loadingOverlay').style.display = 'flex';
             navigator.geolocation.getCurrentPosition(function(pos) {
                 document.getElementById('loadingOverlay').style.display = 'none';
@@ -227,16 +273,16 @@
                 sendToGoogle({
                     action: 'checkIn', employeeName: emp, municipality: mun, workDate: date,
                     checkInTime: timeStr, locationUrl: mapUrl, lat: pos.coords.latitude, lng: pos.coords.longitude
-                }, "🟢 تم تثبيت الحضور الصباحي بنجاح.");
-            }, function() { document.getElementById('loadingOverlay').style.display = 'none'; setStatus("❌ يرجى تفعيل الـ GPS.", "#dc2626", "#fef2f2", "#f87171"); }, {enableHighAccuracy: true});
+                }, "🟢 تم تسجيل الحضور بنجاح في " + timeStr);
+            }, function() { document.getElementById('loadingOverlay').style.display = 'none'; alert("يرجى تفعيل صلاحية الـ GPS للمتصفح."); }, {enableHighAccuracy: true});
         }
 
         function doCheckOut() {
             var emp = document.getElementById('employeeName').value;
             var date = document.getElementById('workDate').value;
-            if(!emp) { setStatus("❌ يرجى اختيار اسم المهندس أولاً!", "#dc2626", "#fef2f2", "#f87171"); return; }
+            if(!emp) { alert("يرجى اختيار اسم المهندس أولاً!"); return; }
 
-            document.getElementById('loadingMsg').innerText = "جاري التحقق من مسافة الانصراف (300م)...";
+            document.getElementById('loadingMsg').innerText = "جاري فحص المسافة (حد أقصى 300م)...";
             document.getElementById('loadingOverlay').style.display = 'flex';
             navigator.geolocation.getCurrentPosition(function(pos) {
                 document.getElementById('loadingOverlay').style.display = 'none';
@@ -246,8 +292,8 @@
                 sendToGoogle({
                     action: 'checkOut', employeeName: emp, workDate: date,
                     checkOutTime: timeStr, locationUrl: mapUrl, lat: pos.coords.latitude, lng: pos.coords.longitude
-                }, "🏠 تم تسجيل الانصراف الميداني بنجاح.");
-            }, function() { document.getElementById('loadingOverlay').style.display = 'none'; setStatus("❌ يرجى تفعيل الـ GPS.", "#dc2626", "#fef2f2", "#f87171"); }, {enableHighAccuracy: true});
+                }, "🏠 تم تسجيل الانصراف الميداني بنجاح في " + timeStr);
+            }, function() { document.getElementById('loadingOverlay').style.display = 'none'; alert("يرجى تفعيل صلاحية الـ GPS للمتصفح."); }, {enableHighAccuracy: true});
         }
 
         function handleFormSubmit(e) {
@@ -256,8 +302,7 @@
             if(!emp) return;
 
             var data = {
-                action: 'submitReport',
-                employeeName: emp, municipality: document.getElementById('municipality').value, workDate: document.getElementById('workDate').value,
+                action: 'submitReport', employeeName: emp, municipality: document.getElementById('municipality').value, workDate: document.getElementById('workDate').value,
                 resolvedIssues: document.getElementById('resolvedIssues').value, pendingIssues: document.getElementById('pendingIssues').value,
                 issueTypes: document.getElementById('issueTypes').value, receivedTablets: document.getElementById('receivedTablets').value,
                 deliveredTablets: document.getElementById('deliveredTablets').value, receivedPrinters: document.getElementById('receivedPrinters').value,
@@ -268,8 +313,8 @@
                 notes: document.getElementById('notes').value
             };
 
-            sendToGoogle(data, "✅ تم إرسال التقرير النهائي، وإرسال نسخة PDF منظمة إلى إيميلك.");
-            setTimeout(() => { document.getElementById('dailyReportForm').reset(); }, 4000);
+            sendToGoogle(data, "✅ تم إرسال التقرير النهائي، وإرسال نسخة PDF إلى إيميلك.");
+            setTimeout(() => { document.getElementById('dailyReportForm').reset(); window.scrollTo({ top: 0, behavior: 'smooth' }); }, 4000);
         }
     </script>
 </body>
