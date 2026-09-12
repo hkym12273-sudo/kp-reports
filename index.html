@@ -7,44 +7,55 @@
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --brand-primary: #a3312b; 
-            --brand-secondary: #7a1d19;
-            --brand-accent: #d94838;
-            --bg-color: #f8fafc;
+            /* ألوان مأخوذة بالضبط من شعار شركة أوراق المعرفة */
+            --brand-primary: #bd3124; 
+            --brand-secondary: #8c1c13;
+            --brand-accent: #e85d41;
+            --bg-color: #f1f5f9;
             --card-bg: #ffffff;
             --text-main: #1e293b;
             --border-color: #e2e8f0;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
-        body { background-color: var(--bg-color); color: var(--text-main); font-size: 14px; padding: 10px; }
-        .container { max-width: 650px; margin: 0 auto; }
+        body { background-color: var(--bg-color); color: var(--text-main); font-size: 13.5px; padding: 10px; }
+        .container { max-width: 600px; margin: 0 auto; }
+        
+        /* تقليل الفراغات في الهيدر وتنسيقه */
         .header {
             background: linear-gradient(135deg, var(--brand-primary), var(--brand-secondary));
-            border-radius: 10px; padding: 16px 20px; display: flex; align-items: center; justify-content: space-between;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); margin-bottom: 15px; border-bottom: 4px solid var(--brand-accent); color: white;
+            border-radius: 8px; padding: 12px 15px; display: flex; align-items: center; justify-content: space-between;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); margin-bottom: 15px; border-bottom: 3px solid var(--brand-accent); color: white;
         }
         .header-logo-box {
-            width: 48px; height: 48px; background: white; border-radius: 50%;
+            width: 48px; height: 48px; background: white; border-radius: 6px;
             display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2); padding: 6px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2); padding: 3px; overflow: hidden;
         }
-        .header-logo-box svg { width: 34px; height: 34px; }
-        .brand-text h1 { font-size: 18px; font-weight: 800; margin-bottom: 2px; }
-        .brand-text h2 { color: #fde047; font-size: 11px; font-weight: 700; }
-        .card { background: var(--card-bg); border-radius: 10px; padding: 18px 15px; margin-bottom: 15px; border: 1px solid var(--border-color); box-shadow: 0 2px 4px rgba(0,0,0,0.01); }
-        .section-title { font-size: 15px; font-weight: 800; color: var(--brand-primary); margin-bottom: 12px; border-bottom: 2px solid #f8e9e8; padding-bottom: 6px; }
-        .form-group { margin-bottom: 12px; }
-        label { display: block; font-size: 13px; font-weight: 700; margin-bottom: 5px; }
-        select, input, textarea { width: 100%; padding: 10px; border: 1.5px solid var(--border-color); border-radius: 6px; font-family: 'Cairo'; background-color: #f8fafc; font-size: 13.5px; }
-        select:focus, input:focus, textarea:focus { outline: none; border-color: var(--brand-accent); }
-        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .btn { width: 100%; padding: 12px; border: none; border-radius: 6px; font-size: 14px; font-weight: 800; cursor: pointer; color: white; margin-bottom: 8px; }
+        /* استدعاء صورة الشعار الحقيقية */
+        .header-logo-box img { width: 100%; height: 100%; object-fit: contain; }
+        
+        .brand-text h1 { font-size: 17px; font-weight: 800; margin-bottom: 0px; }
+        .brand-text h2 { color: #fde047; font-size: 10px; font-weight: 700; letter-spacing: 0.5px; margin-top: 2px; }
+        
+        /* تقليل فراغات الكروت */
+        .card { background: var(--card-bg); border-radius: 8px; padding: 15px 12px; margin-bottom: 12px; border: 1px solid var(--border-color); box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+        .section-title { font-size: 14px; font-weight: 800; color: var(--brand-primary); margin-bottom: 10px; border-bottom: 2px solid #f8e9e8; padding-bottom: 5px; }
+        .form-group { margin-bottom: 10px; }
+        label { display: block; font-size: 12.5px; font-weight: 700; margin-bottom: 4px; color: #334155; }
+        select, input, textarea { width: 100%; padding: 8px 10px; border: 1.5px solid var(--border-color); border-radius: 5px; font-family: 'Cairo'; background-color: #f8fafc; font-size: 13px; }
+        select:focus, input:focus, textarea:focus { outline: none; border-color: var(--brand-accent); background-color: #fff; }
+        
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+        
+        /* أزرار الحضور والانصراف */
+        .btn { width: 100%; padding: 10px; border: none; border-radius: 5px; font-size: 13.5px; font-weight: 800; cursor: pointer; color: white; margin-bottom: 6px; }
         .btn-checkin { background: linear-gradient(135deg, #10b981, #059669); }
-        .btn-checkout { background: linear-gradient(135deg, #334155, #0f172a); }
-        .btn-submit { background: linear-gradient(135deg, var(--brand-primary), var(--brand-secondary)); margin-top: 5px; padding: 14px; font-size: 15px;}
-        .status-text { padding: 10px; border-radius: 6px; text-align: center; margin-top: 8px; border: 1.5px dashed var(--border-color); background: #ffffff; color: #64748b; font-weight: 700; font-size: 13px;}
+        .btn-checkout { background: linear-gradient(135deg, #475569, #1e293b); }
+        .btn-submit { background: linear-gradient(135deg, var(--brand-primary), var(--brand-secondary)); margin-top: 5px; padding: 12px; font-size: 14.5px;}
+        
+        .status-text { padding: 8px; border-radius: 5px; text-align: center; margin-top: 6px; border: 1px dashed var(--border-color); background: #ffffff; color: #64748b; font-weight: 700; font-size: 12px;}
         .loading-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.85); display: none; flex-direction: column; justify-content: center; align-items: center; z-index: 9999; color: white; font-weight: 800; }
-        .spinner { width: 40px; height: 40px; border: 4px solid rgba(255,255,255,0.2); border-radius: 50%; border-top-color: var(--brand-accent); animation: spin 0.8s infinite linear; margin-bottom: 12px; }
+        .spinner { width: 35px; height: 35px; border: 3px solid rgba(255,255,255,0.2); border-radius: 50%; border-top-color: var(--brand-accent); animation: spin 0.8s infinite linear; margin-bottom: 10px; }
         @keyframes spin { to { transform: rotate(360deg); } }
     </style>
 </head>
@@ -52,16 +63,16 @@
     <div class="loading-screen" id="loadingOverlay"><div class="spinner"></div><div id="loadingMsg">جاري المعالجة...</div></div>
 
     <div class="container">
+        <!-- الهيدر الجديد المدمج مع صورتك الحقيقية -->
         <div class="header">
             <div class="brand-text">
                 <h1>شركة أوراق المعرفة</h1>
                 <h2>IT TECHNICAL SUPPORT</h2>
-                <p style="font-size: 11px; opacity: 0.9;">مشروع أمانة بغداد - الجباية الإلكترونية</p>
+                <p style="font-size: 10px; opacity: 0.85;">مشروع أمانة بغداد - الجباية الإلكترونية</p>
             </div>
             <div class="header-logo-box">
-                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                    <path fill="#d94838" d="M50 8 C40 32 35 55 50 82 C65 55 60 32 50 8 Z M50 92 L50 72 M36 52 Q26 42 16 32 Q38 43 48 62 M64 52 Q74 42 84 32 Q62 43 52 62"/>
-                </svg>
+                <!-- هذا السطر يسحب صورة الشعار اللي رفعتها انت باسم logo.jpg -->
+                <img src="logo.jpg" alt="Logo" onerror="this.style.display='none'">
             </div>
         </div>
 
@@ -103,8 +114,8 @@
                     </select>
                 </div>
                 <div class="grid-2">
-                    <div class="form-group"><label>تاريخ العمل</label><input type="date" id="workDate" required readonly style="background:#e2e8f0;"></div>
-                    <div class="form-group"><label>حالة الدوام</label><input type="text" id="workStatusBadge" value="قيد التسجيل" readonly style="color:#0284c7; font-weight:800; text-align:center; background:#eff6ff;"></div>
+                    <div class="form-group"><label>تاريخ العمل</label><input type="date" id="workDate" required readonly style="background:#e2e8f0; border-color:#cbd5e1;"></div>
+                    <div class="form-group"><label>حالة الدوام</label><input type="text" id="workStatusBadge" value="قيد التسجيل" readonly style="color:#0369a1; font-weight:800; text-align:center; background:#e0f2fe; border-color:#bae6fd;"></div>
                 </div>
                 <button type="button" class="btn btn-checkin" onclick="doCheckIn()">📡 تسجيل الحضور الصباحي (GPS)</button>
                 <button type="button" class="btn btn-checkout" onclick="doCheckOut()">🏠 تسجيل الانصراف الرسمي (حد أقصى 300م)</button>
@@ -139,8 +150,8 @@
 
             <div class="card">
                 <div class="section-title">📝 تفاصيل الإنجاز والملاحظات</div>
-                <div class="form-group"><label>الأعمال والصيانة المنفذة *</label><textarea id="dailyTasks" rows="3" required placeholder="وصف دقيق للأعمال المنجزة اليوم..."></textarea></div>
-                <div class="form-group"><label>أسباب التعليق (إن وجدت)</label><textarea id="pendingReason" rows="2"></textarea></div>
+                <div class="form-group"><label>الأعمال والصيانة المنفذة *</label><textarea id="dailyTasks" rows="2" required placeholder="وصف دقيق للأعمال المنجزة اليوم..."></textarea></div>
+                <div class="form-group"><label>أسباب التعليق (إن وجدت)</label><textarea id="pendingReason" rows="1"></textarea></div>
                 <div class="grid-2">
                     <div class="form-group"><label>مشكلة حرجة لغد؟</label><select id="criticalIssue"><option value="لا">لا</option><option value="نعم">نعم</option></select></div>
                     <div class="form-group"><label>متطلبات البلدية</label><input type="text" id="municipalityNeeds"></div>
