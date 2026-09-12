@@ -14,7 +14,6 @@
             --card-bg: #ffffff;
             --text-main: #1e293b;
             --border-color: #e2e8f0;
-            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
         }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
         body { background-color: var(--bg-color); color: var(--text-main); font-size: 14.5px; padding: 15px 10px; }
@@ -22,13 +21,11 @@
         .header {
             background: linear-gradient(135deg, var(--brand-primary), var(--brand-secondary));
             border-radius: 12px; padding: 25px 20px; display: flex; align-items: center; justify-content: space-between;
-            box-shadow: var(--shadow-lg); margin-bottom: 25px; border-bottom: 5px solid var(--brand-accent); color: white;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); margin-bottom: 25px; border-bottom: 5px solid var(--brand-accent); color: white;
         }
-        .brand-text { text-align: right; }
         .brand-text h1 { font-size: 20px; font-weight: 800; margin-bottom: 5px; }
         .brand-text h2 { color: #fde047; font-size: 12px; font-weight: 700; }
-        .brand-logo { width: 60px; height: 60px; background: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; padding: 5px; flex-shrink: 0; }
-        .card { background: var(--card-bg); border-radius: 12px; padding: 25px 20px; margin-bottom: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border: 1px solid var(--border-color); }
+        .card { background: var(--card-bg); border-radius: 12px; padding: 25px 20px; margin-bottom: 20px; border: 1px solid var(--border-color); box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
         .section-title { font-size: 16px; font-weight: 800; color: var(--brand-primary); margin-bottom: 20px; border-bottom: 2px solid #f1f5f9; padding-bottom: 10px; }
         .form-group { margin-bottom: 15px; }
         label { display: block; font-size: 13.5px; font-weight: 700; margin-bottom: 8px; }
@@ -45,10 +42,7 @@
     </style>
 </head>
 <body>
-    <div class="loading-screen" id="loadingOverlay"><div class="spinner"></div><div>جاري معالجة وتوثيق البيانات...</div></div>
-    
-    <!-- الـ iframe المخفي لمعالجة مشاكل الإرسال من الجيت هب -->
-    <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
+    <div class="loading-screen" id="loadingOverlay"><div class="spinner"></div><div id="loadingMsg">جاري المعالجة...</div></div>
 
     <div class="container">
         <div class="header">
@@ -57,13 +51,9 @@
                 <h2>IT TECHNICAL SUPPORT</h2>
                 <p>مشروع أمانة بغداد - الجباية الإلكترونية</p>
             </div>
-            <div class="brand-logo">
-                <svg viewBox="0 0 300 300" width="50" height="50"><g fill="#8b1e19"><path d="M150 15 C135 55 125 90 150 128 C175 90 165 55 150 15 Z"/><path d="M150 22 L150 120" stroke="#ffffff" stroke-width="3" fill="none"/><path d="M150 128 C115 95 105 50 128 30 C100 65 110 110 150 128 Z"/><path d="M150 128 C185 95 195 50 172 30 C200 65 190 110 150 128 Z"/></g></svg>
-            </div>
         </div>
 
         <form id="dailyReportForm" onsubmit="handleFormSubmit(event)">
-            <!-- 1. الحضور والتواجد -->
             <div class="card">
                 <div class="section-title">📍 الحضور والتواجد الميداني</div>
                 <div class="form-group">
@@ -98,11 +88,10 @@
                     <div class="form-group"><label>حالة الدوام</label><input type="text" id="workStatusBadge" value="قيد التسجيل" readonly style="color:#0284c7; font-weight:800; text-align:center; background:#eff6ff;"></div>
                 </div>
                 <button type="button" class="btn btn-checkin" onclick="doCheckIn()">📡 تسجيل الحضور الصباحي (GPS)</button>
-                <button type="button" class="btn btn-checkout" onclick="doCheckOut()">🏠 تسجيل الانصراف الرسمي (GPS)</button>
+                <button type="button" class="btn btn-checkout" onclick="doCheckOut()">🏠 تسجيل الانصراف الرسمـي (حد أقصى 300م)</button>
                 <div class="status-text" id="locationStatusText">📌 يرجى الضغط أعلاه لتثبيت الموقع الجغرافي.</div>
             </div>
 
-            <!-- 2. إحصائيات الصيانة -->
             <div class="card">
                 <div class="section-title">⚙️ إحصائيات الصيانة والأعطال</div>
                 <div class="grid-2">
@@ -112,7 +101,6 @@
                 <div class="form-group"><label>تصنيف الأعطال المعالجة</label><input type="text" id="issueTypes" placeholder="مثال: طابعات، تابلت، كابلات شبكة..."></div>
             </div>
 
-            <!-- 3. العهد -->
             <div class="card">
                 <div class="section-title">📦 إدارة حركة العهد الميدانية</div>
                 <div class="grid-2">
@@ -130,7 +118,6 @@
                 <div class="form-group"><label>تفاصيل السيريال/الأجهزة</label><input type="text" id="assetsDetails" placeholder="أدخل أرقام السيريال للأجهزة المستبدلة..."></div>
             </div>
 
-            <!-- 4. التفاصيل الختامية -->
             <div class="card">
                 <div class="section-title">📝 تفاصيل الإنجاز والملاحظات</div>
                 <div class="form-group"><label>الأعمال والصيانة المنفذة *</label><textarea id="dailyTasks" rows="3" required placeholder="وصف دقيق للأعمال المنجزة اليوم..."></textarea></div>
@@ -167,75 +154,77 @@
             box.innerHTML = msg; box.style.color = color; box.style.backgroundColor = bgColor; box.style.borderColor = borderColor;
         }
 
-        // الإرسال المخفي (iframe) لتجنب أخطاء GitHub
-        function sendViaIframe(payload, successMsg) {
+        function sendToGoogle(payload, successMsg) {
+            document.getElementById('loadingMsg').innerText = "جاري معالجة وتوثيق البيانات...";
             document.getElementById('loadingOverlay').style.display = 'flex';
             
-            var form = document.createElement('form');
-            form.action = SCRIPT_URL;
-            form.method = 'POST';
-            form.target = 'hidden_iframe';
-            
-            for (var key in payload) {
-                var input = document.createElement('input');
-                input.type = 'hidden'; input.name = key; input.value = payload[key];
-                form.appendChild(input);
+            var formBody = [];
+            for (var property in payload) {
+                formBody.push(encodeURIComponent(property) + "=" + encodeURIComponent(payload[property]));
             }
-            
-            document.body.appendChild(form);
-            form.submit();
-            document.body.removeChild(form);
-            
-            // محاكاة الانتظار لتأكيد الإرسال
-            setTimeout(function() {
+
+            fetch(SCRIPT_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: formBody.join("&")
+            })
+            .then(response => response.json())
+            .then(data => {
                 document.getElementById('loadingOverlay').style.display = 'none';
-                setStatus(successMsg, '#059669', '#ecfdf5', '#34d399');
-            }, 3000);
+                if (data.status === 'success') {
+                    setStatus(successMsg, '#059669', '#ecfdf5', '#34d399');
+                    if (payload.action === 'checkIn') document.getElementById('workStatusBadge').value = data.message;
+                    if (payload.action === 'checkOut') document.getElementById('workStatusBadge').value = data.message;
+                } else {
+                    setStatus("❌ " + data.message, "#dc2626", "#fef2f2", "#f87171");
+                    alert("تنبيه: " + data.message);
+                }
+            })
+            .catch(error => {
+                document.getElementById('loadingOverlay').style.display = 'none';
+                setStatus("❌ خطأ في الاتصال بالسيرفر.", "#dc2626", "#fef2f2", "#f87171");
+            });
         }
 
-        // تسجيل الحضور
         function doCheckIn() {
             var emp = document.getElementById('employeeName').value;
             var mun = document.getElementById('municipality').value;
             var date = document.getElementById('workDate').value;
             if(!emp || !mun) { setStatus("❌ يرجى اختيار اسم المهندس والبلدية أولاً!", "#dc2626", "#fef2f2", "#f87171"); return; }
 
+            document.getElementById('loadingMsg').innerText = "جاري تحديد موقع GPS للحضور...";
             document.getElementById('loadingOverlay').style.display = 'flex';
             navigator.geolocation.getCurrentPosition(function(pos) {
                 document.getElementById('loadingOverlay').style.display = 'none';
                 var mapUrl = "https://maps.google.com/?q=" + pos.coords.latitude + "," + pos.coords.longitude;
                 var timeStr = new Date().toLocaleTimeString('en-GB', {hour: '2-digit', minute:'2-digit'});
                 
-                sendViaIframe({
-                    action: 'checkIn', employeeName: emp, municipality: mun, workDate: date, checkInTime: timeStr, locationUrl: mapUrl
-                }, "🟢 تم تثبيت الحضور الصباحي بنجاح للإكسل.");
-                
-                document.getElementById('workStatusBadge').value = "حضور مثبت (" + timeStr + ")";
+                sendToGoogle({
+                    action: 'checkIn', employeeName: emp, municipality: mun, workDate: date,
+                    checkInTime: timeStr, locationUrl: mapUrl, lat: pos.coords.latitude, lng: pos.coords.longitude
+                }, "🟢 تم تثبيت الحضور الصباحي بنجاح.");
             }, function() { document.getElementById('loadingOverlay').style.display = 'none'; setStatus("❌ يرجى تفعيل الـ GPS.", "#dc2626", "#fef2f2", "#f87171"); }, {enableHighAccuracy: true});
         }
 
-        // تسجيل الانصراف
         function doCheckOut() {
             var emp = document.getElementById('employeeName').value;
             var date = document.getElementById('workDate').value;
-            var mun = document.getElementById('municipality').value;
             if(!emp) { setStatus("❌ يرجى اختيار اسم المهندس أولاً!", "#dc2626", "#fef2f2", "#f87171"); return; }
 
+            document.getElementById('loadingMsg').innerText = "جاري التحقق من مسافة الانصراف (300م)...";
             document.getElementById('loadingOverlay').style.display = 'flex';
             navigator.geolocation.getCurrentPosition(function(pos) {
                 document.getElementById('loadingOverlay').style.display = 'none';
                 var mapUrl = "https://maps.google.com/?q=" + pos.coords.latitude + "," + pos.coords.longitude;
                 var timeStr = new Date().toLocaleTimeString('en-GB', {hour: '2-digit', minute:'2-digit'});
                 
-                sendViaIframe({
-                    action: 'checkOut', employeeName: emp, workDate: date, municipality: mun, checkOutTime: timeStr, locationUrl: mapUrl
-                }, "🏠 تم تسجيل الانصراف الميداني بنجاح للإكسل.");
-                
-                document.getElementById('workStatusBadge').value = "تم الانصراف (" + timeStr + ")";
+                sendToGoogle({
+                    action: 'checkOut', employeeName: emp, workDate: date,
+                    checkOutTime: timeStr, locationUrl: mapUrl, lat: pos.coords.latitude, lng: pos.coords.longitude
+                }, "🏠 تم تسجيل الانصراف الميداني بنجاح.");
             }, function() { document.getElementById('loadingOverlay').style.display = 'none'; setStatus("❌ يرجى تفعيل الـ GPS.", "#dc2626", "#fef2f2", "#f87171"); }, {enableHighAccuracy: true});
         }
 
-        // التقرير النهائي
         function handleFormSubmit(e) {
             e.preventDefault();
             var emp = document.getElementById('employeeName').value;
@@ -254,7 +243,7 @@
                 notes: document.getElementById('notes').value
             };
 
-            sendViaIframe(data, "✅ تم إرسال التقرير لنظام التقارير، وتم إرسال نسخة PDF إلى إيميلك.");
+            sendToGoogle(data, "✅ تم إرسال التقرير النهائي، وإرسال نسخة PDF منظمة إلى إيميلك.");
             setTimeout(() => { document.getElementById('dailyReportForm').reset(); }, 4000);
         }
     </script>
