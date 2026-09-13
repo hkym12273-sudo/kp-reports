@@ -19,27 +19,72 @@
         .container { max-width: 650px; margin: 0 auto; }
         
         /* الهيدر الرسمي الكلاسيكي */
+        /* --------------------------------------------------- */
+        /* تصميم الهيدر الجديد المطابق للصورة الاحترافية */
+        /* --------------------------------------------------- */
         .header {
-            background: linear-gradient(135deg, var(--brand-primary), var(--brand-secondary));
-            border-radius: 10px; padding: 20px; display: flex; align-items: center; justify-content: space-between;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); margin-bottom: 20px; border-bottom: 4px solid #fde047; color: white;
+            background-color: #ffffff;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: stretch;
+            min-height: 145px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 25px;
+            border: 2px solid #f1f5f9;
+            overflow: hidden;
+            padding: 0;
+            position: relative;
         }
-        .header-logo-box { width: 50px; height: 50px; background: white; border-radius: 8px; padding: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
-        .header-logo-box svg { width: 100%; height: 100%; }
-        .brand-text h1 { font-size: 19px; font-weight: 800; margin-bottom: 2px; }
-        .brand-text h2 { color: #fde047; font-size: 11px; font-weight: 700; letter-spacing: 0.5px; }
-        
-        .card { background: var(--card-bg); border-radius: 10px; padding: 20px 15px; margin-bottom: 15px; border: 1px solid var(--border-color); box-shadow: 0 2px 5px rgba(0,0,0,0.02); }
-        .section-title { font-size: 15px; font-weight: 800; color: var(--brand-primary); margin-bottom: 15px; border-bottom: 2px solid #f1f5f9; padding-bottom: 8px; }
-        
-        .form-group { margin-bottom: 15px; }
-        label { display: block; font-size: 13px; font-weight: 700; margin-bottom: 6px; color: #334155; }
-        select, input[type="text"], input[type="number"], input[type="date"], textarea { 
-            width: 100%; padding: 10px; border: 1.5px solid var(--border-color); border-radius: 6px; 
-            font-family: 'Cairo'; background-color: #f8fafc; font-size: 13.5px; 
+
+        .header-right {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 50%;
+            z-index: 1;
         }
-        select:focus, input:focus, textarea:focus { outline: none; border-color: var(--brand-secondary); }
+        .header-logo-box { width: 85px; height: 85px; margin-bottom: 10px; display: flex; align-items: center; justify-content: center; }
+        .header-logo-box img { max-width: 100%; max-height: 100%; object-fit: contain; }
+        .header-right h1 { font-size: 24px; font-weight: 900; color: var(--brand-secondary); margin: 0; text-align: center; }
+
+        .header-left {
+            background: var(--brand-secondary);
+            border-radius: 0 50px 0 0;
+            padding: 15px 25px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 15px;
+            z-index: 1;
+            align-self: flex-end;
+            min-width: 48%;
+            color: white;
+        }
+
+        .support-text { text-align: right; }
+        .support-text h2 { font-size: 20px; font-weight: 800; margin: 0 0 2px 0; color: #ffffff; }
+        .support-text h3 { font-size: 13px; font-weight: 400; color: #e2e8f0; font-family: Arial, sans-serif; letter-spacing: 0.5px; margin: 0; }
+
+        .support-icon {
+            border-right: 2.5px solid rgba(255, 255, 255, 0.3);
+            padding-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .support-icon svg { width: 38px; height: 38px; fill: white; }
         
+        @media (max-width: 480px) {
+            .header { flex-direction: column; align-items: center; }
+            .header-right { width: 100%; padding: 20px 10px 15px 10px; }
+            .header-left { width: 100%; border-radius: 35px 35px 0 0; justify-content: center; padding: 15px; }
+            .support-icon { padding-right: 12px; }
+            .support-text h2 { font-size: 18px; }
+        }
+        /* --------------------------------------------------- */
         /* تنسيق مربعات الاختيار (تصنيف الأعطال) */
         .checkbox-group { display: flex; flex-wrap: wrap; gap: 10px; background: #f8fafc; padding: 12px; border: 1.5px solid var(--border-color); border-radius: 6px; }
         .checkbox-label { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; cursor: pointer; width: 48%; }
@@ -66,18 +111,27 @@
 <body>
     <div class="loading-screen" id="loadingOverlay"><div class="spinner"></div><div id="loadingMsg">جاري المعالجة...</div></div>
 
-    <div class="container">
-        <!-- الهيدر مع دمج الشعار كـ SVG حتى يظهر دائماً -->
+  <!-- الهيدر الجديد المطابق للتصميم الاحترافي -->
         <div class="header">
-            <div class="brand-text">
+            <!-- القسم الأيمن (الشعار واسم الشركة فقط) -->
+            <div class="header-right">
+                <div class="header-logo-box">
+                    <img src="logo.png" alt="شعار الشركة" onerror="this.style.display='none'">
+                </div>
                 <h1>شركة أوراق المعرفة</h1>
-                <h2>IT TECHNICAL SUPPORT</h2>
-                <p style="font-size: 11px; opacity: 0.9;">مشروع أمانة بغداد - الجباية الإلكترونية</p>
             </div>
-            <div class="header-logo-box">
-                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                    <path fill="#bd3124" d="M50 8 C40 32 35 55 50 82 C65 55 60 32 50 8 Z M50 92 L50 72 M36 52 Q26 42 16 32 Q38 43 48 62 M64 52 Q74 42 84 32 Q62 43 52 62"/>
-                </svg>
+            
+            <!-- القسم الأيسر (شريط الدعم الفني العنابي مع أيقونة السماعة) -->
+            <div class="header-left">
+                <div class="support-text">
+                    <h2>تقارير الدعم الفني</h2>
+                    <h3 dir="ltr" style="text-align: right;">Technical Support Reports</h3>
+                </div>
+                <div class="support-icon">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2C6.48 2 2 6.48 2 12v5.5C2 18.88 3.12 20 4.5 20h2c.83 0 1.5-.67 1.5-1.5v-5c0-.83-.67-1.5-1.5-1.5h-2c0-3.31 2.69-6 6-6s6 2.69 6 6h-2c-.83 0-1.5.67-1.5 1.5v5c0 .83.67 1.5 1.5 1.5h2c1.38 0 2.5-1.12 2.5-2.5V12c0-5.52-4.48-10-10-10zm7 11h1v4h-1v-4zM4 13h1v4H4v-4z"/>
+                    </svg>
+                </div>
             </div>
         </div>
 
