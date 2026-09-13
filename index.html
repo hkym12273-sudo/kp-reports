@@ -7,18 +7,18 @@
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --brand-primary: #8b1e19;
-            --brand-secondary: #bd3124;
-            --bg-color: #f8fafc;
+            --brand-primary: #8b1e19; /* العنابي الرسمي */
+            --bg-color: #f1f5f9;
             --card-bg: #ffffff;
             --text-main: #1e293b;
             --border-color: #e2e8f0;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
-        body { background-color: var(--bg-color); color: var(--text-main); font-size: 14.5px; padding: 15px 10px; }
-        .container { max-width: 650px; margin: 0 auto; }
+        body { background-color: var(--bg-color); color: var(--text-main); font-size: 14.5px; padding: 20px 10px; }
         
-        /* الهيدر الرسمي الكلاسيكي */
+        /* هذا هو السطر اللي كان ممسوح وخلى الاستمارة تنفرش على الشاشة */
+        .container { max-width: 800px; margin: 0 auto; }
+        
         /* --------------------------------------------------- */
         /* تصميم الهيدر الجديد المطابق للصورة الاحترافية */
         /* --------------------------------------------------- */
@@ -28,44 +28,42 @@
             display: flex;
             justify-content: space-between;
             align-items: stretch;
-            min-height: 145px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
             margin-bottom: 25px;
-            border: 2px solid #f1f5f9;
+            border: 2px solid var(--brand-primary);
             overflow: hidden;
-            padding: 0;
             position: relative;
         }
 
+        /* القسم الأيمن: الشعار واسم الشركة */
         .header-right {
-            padding: 20px;
+            padding: 15px 20px;
             display: flex;
-            flex-direction: column;
             align-items: center;
-            justify-content: center;
-            width: 50%;
-            z-index: 1;
+            gap: 15px;
+            width: 55%;
         }
-        .header-logo-box { width: 85px; height: 85px; margin-bottom: 10px; display: flex; align-items: center; justify-content: center; }
+        .header-logo-box { width: 70px; height: 70px; display: flex; align-items: center; justify-content: center; }
         .header-logo-box img { max-width: 100%; max-height: 100%; object-fit: contain; }
-        .header-right h1 { font-size: 24px; font-weight: 900; color: var(--brand-secondary); margin: 0; text-align: center; }
-
+        
+        .header-right-text { display: flex; flex-direction: column; }
+        .header-right-text h1 { font-size: 24px; font-weight: 900; color: var(--brand-primary); margin: 0; line-height: 1.2; }
+        
+        /* القسم الأيسر: شريط الدعم الفني العنابي */
         .header-left {
-            background: var(--brand-secondary);
-            border-radius: 0 50px 0 0;
+            background: var(--brand-primary);
+            border-radius: 0 60px 0 0; /* القوس المنحني */
             padding: 15px 25px;
             display: flex;
             align-items: center;
             justify-content: flex-end;
             gap: 15px;
-            z-index: 1;
-            align-self: flex-end;
-            min-width: 48%;
+            width: 45%;
             color: white;
         }
 
         .support-text { text-align: right; }
-        .support-text h2 { font-size: 20px; font-weight: 800; margin: 0 0 2px 0; color: #ffffff; }
+        .support-text h2 { font-size: 18px; font-weight: 800; margin: 0 0 2px 0; color: #ffffff; }
         .support-text h3 { font-size: 13px; font-weight: 400; color: #e2e8f0; font-family: Arial, sans-serif; letter-spacing: 0.5px; margin: 0; }
 
         .support-icon {
@@ -75,50 +73,68 @@
             align-items: center;
             justify-content: center;
         }
-        .support-icon svg { width: 38px; height: 38px; fill: white; }
+        .support-icon svg { width: 35px; height: 35px; fill: white; }
         
-        @media (max-width: 480px) {
-            .header { flex-direction: column; align-items: center; }
-            .header-right { width: 100%; padding: 20px 10px 15px 10px; }
+        /* توافقية الشاشات الصغيرة (الموبايل) */
+        @media (max-width: 600px) {
+            .header { flex-direction: column; align-items: center; border-radius: 12px; }
+            .header-right { width: 100%; padding: 15px; flex-direction: column; text-align: center; }
             .header-left { width: 100%; border-radius: 35px 35px 0 0; justify-content: center; padding: 15px; }
             .support-icon { padding-right: 12px; }
-            .support-text h2 { font-size: 18px; }
+            .support-text h2 { font-size: 16px; }
         }
         /* --------------------------------------------------- */
-        /* تنسيق مربعات الاختيار (تصنيف الأعطال) */
-        .checkbox-group { display: flex; flex-wrap: wrap; gap: 10px; background: #f8fafc; padding: 12px; border: 1.5px solid var(--border-color); border-radius: 6px; }
-        .checkbox-label { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; cursor: pointer; width: 48%; }
-        .checkbox-label input[type="checkbox"] { width: 16px; height: 16px; accent-color: var(--brand-primary); cursor: pointer; }
 
-        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .card { background: var(--card-bg); border-radius: 10px; padding: 20px; margin-bottom: 15px; border: 1px solid var(--border-color); box-shadow: 0 2px 5px rgba(0,0,0,0.02); }
+        .section-title { font-size: 16px; font-weight: 800; color: var(--brand-primary); margin-bottom: 15px; border-bottom: 2px solid #f1f5f9; padding-bottom: 8px; }
         
-        .btn { width: 100%; padding: 12px; border: none; border-radius: 6px; font-size: 14px; font-weight: 800; cursor: pointer; color: white; margin-bottom: 8px; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; font-size: 14px; font-weight: 700; margin-bottom: 6px; color: #334155; }
+        select, input[type="text"], input[type="number"], input[type="date"], textarea { 
+            width: 100%; padding: 10px 12px; border: 1.5px solid var(--border-color); border-radius: 6px; 
+            font-family: 'Cairo'; background-color: #f8fafc; font-size: 14px; 
+        }
+        select:focus, input:focus, textarea:focus { outline: none; border-color: var(--brand-primary); }
+        
+        /* تنسيق مربعات الاختيار */
+        .checkbox-group { display: flex; flex-wrap: wrap; gap: 15px; background: #f8fafc; padding: 15px; border: 1.5px solid var(--border-color); border-radius: 6px; }
+        .checkbox-label { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; cursor: pointer; width: 45%; }
+        .checkbox-label input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--brand-primary); cursor: pointer; }
+
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        
+        .btn { width: 100%; padding: 14px; border: none; border-radius: 6px; font-size: 15px; font-weight: 800; cursor: pointer; color: white; margin-bottom: 8px; }
         .btn-checkin { background: #059669; }
         .btn-checkout { background: #334155; }
-        .btn-submit { background: var(--brand-primary); margin-top: 10px; padding: 15px; font-size: 15px; }
+        .btn-submit { background: var(--brand-primary); margin-top: 10px; padding: 16px; font-size: 16px; }
         
-        .status-text { padding: 10px; border-radius: 6px; text-align: center; margin-top: 10px; border: 1px dashed var(--border-color); background: #ffffff; color: #64748b; font-weight: 700; font-size: 13px;}
+        .status-text { padding: 10px; border-radius: 6px; text-align: center; margin-top: 10px; border: 1px dashed var(--border-color); background: #ffffff; color: #64748b; font-weight: 700; font-size: 14px;}
         .loading-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.85); display: none; flex-direction: column; justify-content: center; align-items: center; z-index: 9999; color: white; font-weight: 800; }
         .spinner { width: 40px; height: 40px; border: 4px solid rgba(255,255,255,0.2); border-radius: 50%; border-top-color: #fde047; animation: spin 0.8s infinite linear; margin-bottom: 15px; }
         @keyframes spin { to { transform: rotate(360deg); } }
 
-        /* تعديلات للموبايل للـ Checkboxes */
-        @media (max-width: 480px) {
+        @media (max-width: 600px) {
             .checkbox-label { width: 100%; }
+            .grid-2 { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
     <div class="loading-screen" id="loadingOverlay"><div class="spinner"></div><div id="loadingMsg">جاري المعالجة...</div></div>
 
-  <!-- الهيدر الجديد المطابق للتصميم الاحترافي -->
+    <!-- الغلاف اللي يحافظ على عرض الاستمارة بالوسط -->
+    <div class="container">
+        
+        <!-- الهيدر الجديد المطابق للتصميم الاحترافي -->
         <div class="header">
             <!-- القسم الأيمن (الشعار واسم الشركة فقط) -->
             <div class="header-right">
                 <div class="header-logo-box">
                     <img src="logo.png" alt="شعار الشركة" onerror="this.style.display='none'">
                 </div>
-                <h1>شركة أوراق المعرفة</h1>
+                <div class="header-right-text">
+                    <h1>شركة أوراق المعرفة</h1>
+                </div>
             </div>
             
             <!-- القسم الأيسر (شريط الدعم الفني العنابي مع أيقونة السماعة) -->
@@ -187,7 +203,6 @@
                     <div class="form-group"><label>المشاكل المحلولة *</label><input type="number" id="resolvedIssues" min="0" value="0" required></div>
                     <div class="form-group"><label>المشاكل المعلقة *</label><input type="number" id="pendingIssues" min="0" value="0" required></div>
                 </div>
-                <!-- رجعنا مربعات الاختيار (Checkboxes) حسب صورتك بالضبط -->
                 <div class="form-group">
                     <label>نوع الأعطال التي تمت معالجتها اليوم *</label>
                     <div class="checkbox-group">
@@ -234,7 +249,6 @@
         const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz8WWzNg7anoSKyY75FPaqTWNs59My0XbjsIu14qS06G1v9YL5fIeFDjCYEGSp3BPrf/exec";
 
         window.onload = function() {
-            // كود جديد لاستخراج التاريخ المضمون
             const today = new Date();
             const year = today.getFullYear();
             const month = String(today.getMonth() + 1).padStart(2, '0');
@@ -331,7 +345,6 @@
             var emp = document.getElementById('employeeName').value;
             if(!emp) return;
 
-            // كود سحب البيانات من مربعات الاختيار (Checkboxes)
             var selectedIssues = [];
             var checkboxes = document.querySelectorAll('input[name="issueType"]:checked');
             for(var i=0; i<checkboxes.length; i++) { selectedIssues.push(checkboxes[i].value); }
@@ -341,7 +354,7 @@
                 action: 'submitReport',
                 employeeName: emp, municipality: document.getElementById('municipality').value, workDate: document.getElementById('workDate').value,
                 resolvedIssues: document.getElementById('resolvedIssues').value, pendingIssues: document.getElementById('pendingIssues').value,
-                issueTypes: issueTypesStr, // إرسال اختيارات الأعطال هنا
+                issueTypes: issueTypesStr,
                 receivedTablets: document.getElementById('receivedTablets').value, deliveredTablets: document.getElementById('deliveredTablets').value, 
                 receivedPrinters: document.getElementById('receivedPrinters').value, deliveredPrinters: document.getElementById('deliveredPrinters').value, 
                 vestsDelivered: document.getElementById('vestsDelivered').value, capsDelivered: document.getElementById('capsDelivered').value, 
