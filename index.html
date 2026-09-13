@@ -14,13 +14,28 @@
             --border-color: #e2e8f0;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
-        body { background-color: var(--bg-color); color: var(--text-main); font-size: 14.5px; padding: 20px 10px; }
         
-        /* هذا هو السطر اللي كان ممسوح وخلى الاستمارة تنفرش على الشاشة */
-        .container { max-width: 800px; margin: 0 auto; }
+        /* التعديل الجديد: خلفية متدرجة ثابتة وفخمة للشاشة بالكامل */
+        body { 
+            background: linear-gradient(135deg, #4a0e0b 0%, #8b1e19 50%, #bd3124 100%);
+            background-attachment: fixed;
+            color: var(--text-main); 
+            font-size: 14.5px; 
+            padding: 30px 10px; 
+        }
+        
+        /* التعديل الجديد: الاستمارة نفسها بداخل إطار أبيض بارز مع ظل عميق */
+        .container { 
+            max-width: 800px; 
+            margin: 0 auto; 
+            background-color: #f8fafc; 
+            padding: 25px; 
+            border-radius: 16px; 
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4); 
+        }
         
         /* --------------------------------------------------- */
-        /* تصميم الهيدر الجديد المطابق للصورة الاحترافية */
+        /* تصميم الهيدر المطابق للصورة الاحترافية */
         /* --------------------------------------------------- */
         .header {
             background-color: #ffffff;
@@ -35,7 +50,6 @@
             position: relative;
         }
 
-        /* القسم الأيمن: الشعار واسم الشركة */
         .header-right {
             padding: 15px 20px;
             display: flex;
@@ -49,10 +63,9 @@
         .header-right-text { display: flex; flex-direction: column; }
         .header-right-text h1 { font-size: 24px; font-weight: 900; color: var(--brand-primary); margin: 0; line-height: 1.2; }
         
-        /* القسم الأيسر: شريط الدعم الفني العنابي */
         .header-left {
             background: var(--brand-primary);
-            border-radius: 0 60px 0 0; /* القوس المنحني */
+            border-radius: 0 60px 0 0;
             padding: 15px 25px;
             display: flex;
             align-items: center;
@@ -75,8 +88,9 @@
         }
         .support-icon svg { width: 35px; height: 35px; fill: white; }
         
-        /* توافقية الشاشات الصغيرة (الموبايل) */
         @media (max-width: 600px) {
+            body { padding: 15px 5px; }
+            .container { padding: 15px; border-radius: 12px; }
             .header { flex-direction: column; align-items: center; border-radius: 12px; }
             .header-right { width: 100%; padding: 15px; flex-direction: column; text-align: center; }
             .header-left { width: 100%; border-radius: 35px 35px 0 0; justify-content: center; padding: 15px; }
@@ -122,7 +136,7 @@
 <body>
     <div class="loading-screen" id="loadingOverlay"><div class="spinner"></div><div id="loadingMsg">جاري المعالجة...</div></div>
 
-    <!-- الغلاف اللي يحافظ على عرض الاستمارة بالوسط -->
+    <!-- الغلاف اللي يحافظ على عرض الاستمارة بالوسط والخلفية وراه متدرجة -->
     <div class="container">
         
         <!-- الهيدر الجديد المطابق للتصميم الاحترافي -->
