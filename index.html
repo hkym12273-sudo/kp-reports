@@ -33,7 +33,7 @@
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4); 
         }
         
-        /* تصميم الهيدر المعتمد */
+        /* تصميم الهيدر */
         .header {
             background-color: #ffffff;
             border-radius: 12px;
@@ -117,35 +117,17 @@
         .btn-checkin { background: #059669; }
         .btn-checkout { background: #334155; }
         
-        /* تصميم زر الإرسال بنهاية الاستمارة */
         .btn-submit { 
-            width: 100%; 
-            background: linear-gradient(135deg, var(--brand-primary), var(--brand-secondary)); 
-            border: none;
-            border-radius: 8px;
-            color: white; 
-            padding: 18px 20px; 
-            font-size: 17px; 
-            font-weight: 800; 
-            cursor: pointer; 
-            box-shadow: 0 4px 12px rgba(139, 30, 25, 0.3);
-            transition: all 0.3s ease;
-            margin-top: 10px;
+            width: 100%; background: linear-gradient(135deg, var(--brand-primary), var(--brand-secondary)); 
+            border: none; border-radius: 8px; color: white; padding: 18px 20px; font-size: 17px; 
+            font-weight: 800; cursor: pointer; box-shadow: 0 4px 12px rgba(139, 30, 25, 0.3);
+            transition: all 0.3s ease; margin-top: 10px;
         }
         .btn-submit:hover { opacity: 0.95; transform: translateY(-1px); }
         
-        /* رسالة التأكيد في نهاية الاستمارة تحت الزر */
         .status-box-bottom { 
-            width: 100%;
-            padding: 14px; 
-            border-radius: 8px; 
-            text-align: center; 
-            margin-top: 15px; 
-            border: 1.5px dashed var(--border-color); 
-            background: #ffffff; 
-            color: #475569; 
-            font-weight: 700; 
-            font-size: 14px;
+            width: 100%; padding: 14px; border-radius: 8px; text-align: center; margin-top: 15px; 
+            border: 1.5px dashed var(--border-color); background: #ffffff; color: #475569; font-weight: 700; font-size: 14px;
         }
 
         .status-box-top {
@@ -170,14 +152,9 @@
         <!-- الهيدر -->
         <div class="header">
             <div class="header-right">
-                <div class="header-logo-box">
-                    <img src="logo.png" alt="شعار الشركة" onerror="this.style.display='none'">
-                </div>
-                <div class="header-right-text">
-                    <h1>شركة أوراق المعرفة</h1>
-                </div>
+                <div class="header-logo-box"><img src="logo.png" alt="شعار الشركة" onerror="this.style.display='none'"></div>
+                <div class="header-right-text"><h1>شركة أوراق المعرفة</h1></div>
             </div>
-            
             <div class="header-left">
                 <div class="support-text">
                     <h2>تقارير الدعم الفني</h2>
@@ -204,6 +181,7 @@
                         <option value="سجاد جمعة رحيم">سجاد جمعة رحيم</option>
                         <option value="حيدر عبد الكريم">حيدر عبد الكريم</option>
                         <option value="علي قاسم">علي قاسم</option>
+                        <option value="عمر خالد">عمر خالد</option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -233,8 +211,20 @@
                     <div class="form-group"><label>تاريخ العمل</label><input type="date" id="workDate" required readonly style="background:#e2e8f0; pointer-events: none;"></div>
                     <div class="form-group"><label>حالة الدوام</label><input type="text" id="workStatusBadge" value="قيد التسجيل" readonly style="color:#0369a1; font-weight:800; text-align:center; background:#e0f2fe;"></div>
                 </div>
+                
                 <button type="button" class="btn btn-checkin" onclick="doCheckIn()">📡 تسجيل الحضور الصباحي (GPS)</button>
-                <button type="button" class="btn btn-checkout" onclick="doCheckOut()">🏠 تسجيل الانصراف الرسمي (حد أقصى 300م)</button>
+                <button type="button" class="btn btn-checkout" onclick="doCheckOut()">🏠 تسجيل الانصراف الرسمي</button>
+                
+                <!-- مربع الانصراف الطارئ -->
+                <div style="margin-top: 10px; background: #fff1f2; border: 1px solid #fecdd3; padding: 12px; border-radius: 6px;">
+                    <label class="checkbox-label" style="width: 100%; color: #be123c; font-weight: 800;">
+                        <input type="checkbox" id="emergencyCheckoutToggle" onchange="toggleEmergencyReason()"> ⚠️ تسجيل انصراف من موقع آخر (طارئ)
+                    </label>
+                    <div id="emergencyReasonContainer" style="display: none; margin-top: 10px;">
+                        <input type="text" id="emergencyReason" placeholder="اذكر سبب الانصراف من خارج الموقع (إجباري)..." style="border-color: #fca5a5;">
+                    </div>
+                </div>
+                
                 <div class="status-box-top" id="attendanceStatusText">📌 يرجى الضغط أعلاه لتثبيت الموقع الصباحي أو الانصراف.</div>
             </div>
 
@@ -256,7 +246,7 @@
                 </div>
             </div>
 
-            <!-- 3. حركة العهد الميدانية (مستلم - مسلم - مستبدل) -->
+            <!-- 3. حركة العهد الميدانية -->
             <div class="card">
                 <div class="section-title">📦 إدارة حركة العهد الميدانية</div>
                 <div class="grid-3">
@@ -287,10 +277,7 @@
                 </div>
                 <div class="form-group"><label>ملاحظات إضافية</label><input type="text" id="notes"></div>
                 
-                <!-- زر الإرسال بنهاية الاستمارة -->
                 <button type="submit" class="btn-submit">🚀 إرسال التقرير النهائي واعتماد اليوم</button>
-                
-                <!-- رسالة تأكيد الإرسال تحت الزر -->
                 <div class="status-box-bottom" id="finalStatusText">📌 يرجى مراجعة كافة البيانات قبل الضغط على زر الإرسال أعلاه.</div>
             </div>
         </form>
@@ -299,7 +286,6 @@
     <script>
         const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz8WWzNg7anoSKyY75FPaqTWNs59My0XbjsIu14qS06G1v9YL5fIeFDjCYEGSp3BPrf/exec";
 
-        // الدالة المسؤولة عن ملء التاريخ واسم المهندس عند تحميل الصفحة أو بعد إرسال التقرير
         function initFormDefaults() {
             const today = new Date();
             const year = today.getFullYear();
@@ -312,6 +298,10 @@
             
             document.getElementById('workStatusBadge').value = "قيد التسجيل";
             setFinalStatus("📌 يرجى مراجعة كافة البيانات قبل الضغط على زر الإرسال أعلاه.", "#475569", "#ffffff", "#cbd5e1");
+            
+            document.getElementById('emergencyCheckoutToggle').checked = false;
+            document.getElementById('emergencyReasonContainer').style.display = 'none';
+            document.getElementById('emergencyReason').value = '';
         }
 
         window.onload = initFormDefaults;
@@ -329,6 +319,11 @@
         function setFinalStatus(msg, color, bgColor, borderColor) {
             var box = document.getElementById('finalStatusText');
             box.innerHTML = msg; box.style.color = color; box.style.backgroundColor = bgColor; box.style.borderColor = borderColor;
+        }
+
+        function toggleEmergencyReason() {
+            var isChecked = document.getElementById('emergencyCheckoutToggle').checked;
+            document.getElementById('emergencyReasonContainer').style.display = isChecked ? 'block' : 'none';
         }
 
         function sendToGoogle(payload, isFinalReport) {
@@ -404,7 +399,15 @@
             var date = document.getElementById('workDate').value;
             if(!emp) { setAttendanceStatus("❌ يرجى اختيار اسم المهندس أولاً!", "#dc2626", "#fef2f2", "#f87171"); return; }
 
-            document.getElementById('loadingMsg').innerText = "جاري التحقق من مسافة الانصراف (300م)...";
+            var isEmergency = document.getElementById('emergencyCheckoutToggle').checked;
+            var emergencyReason = document.getElementById('emergencyReason').value;
+            
+            if (isEmergency && !emergencyReason.trim()) {
+                setAttendanceStatus("❌ يرجى كتابة سبب الانصراف الطارئ (مكان التواجد الحالي)!", "#dc2626", "#fef2f2", "#f87171");
+                return;
+            }
+
+            document.getElementById('loadingMsg').innerText = "جاري التحقق من مسافة الانصراف...";
             document.getElementById('loadingOverlay').style.display = 'flex';
             navigator.geolocation.getCurrentPosition(function(pos) {
                 document.getElementById('loadingOverlay').style.display = 'none';
@@ -412,8 +415,15 @@
                 var timeStr = new Date().toLocaleTimeString('en-GB', {hour: '2-digit', minute:'2-digit'});
                 
                 sendToGoogle({
-                    action: 'checkOut', employeeName: emp, workDate: date,
-                    checkOutTime: timeStr, locationUrl: mapUrl, lat: pos.coords.latitude, lng: pos.coords.longitude
+                    action: 'checkOut', 
+                    employeeName: emp, 
+                    workDate: date,
+                    checkOutTime: timeStr, 
+                    locationUrl: mapUrl, 
+                    lat: pos.coords.latitude, 
+                    lng: pos.coords.longitude,
+                    isEmergency: isEmergency,
+                    emergencyReason: emergencyReason
                 }, false);
             }, function() { document.getElementById('loadingOverlay').style.display = 'none'; setAttendanceStatus("❌ يرجى تفعيل الـ GPS بالهاتف.", "#dc2626", "#fef2f2", "#f87171"); }, {enableHighAccuracy: true});
         }
